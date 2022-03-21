@@ -9,7 +9,7 @@ You are working for a start-up company that develops mobile gaming applications 
 - [C]: Manually check these resources as this is not supported in CloudFormation Drift Detection.
 - [D]: Assign Read permission to CloudFormation Drift Detection to determine drift.
 
-### *Answer: B*
+#### *Answer: B*
 
 AWS CloudFormation Drift Detection can be used to detect changes made to AWS resources outside the CloudFormation Templates. AWS CloudFormation Drift Detection only checks property values explicitly set by stack templates or by specifying template parameters. It does not determine drift for property values that are set by default. To determine drift for these resources, you can explicitly set property values that can be the same as that of the default value.
 
@@ -30,7 +30,7 @@ You are responsible for performing a migration from your company's on-premise da
 - [C]: Use S3 DataSync.
 - [D]: Use AWS Database Migration Service.
 
-### *Answer: C*
+#### *Answer: C*
 
 DataSync is a service used to transfer data between on-premise storage to AWS S3, EFS and FSx. It is cost-effective, easy to use, and can handle the transfer to EFS and S3. More details: [AWS S3 DataSync](https://aws.amazon.com/datasync/faqs/)
 
@@ -50,7 +50,7 @@ A company hosts a popular web application that connects to an Amazon RDS MySQL D
 - [D]: Create a network ACL on the DB subnet, allow MySQL port 3306 inbound for Web Servers and deny all outbound traffic.
 - [E]: Create a DB Server security group that allows HTTPS port 443 inbound and specify the source as a Web Server security group.
 
-### *Answer: B & C*
+#### *Answer: B & C*
 
 1) To ensure that traffic can flow into your webserver from anywhere on secure traffic, you need to allow inbound security at 443.
 
@@ -66,7 +66,7 @@ You lead a team to develop a new web application in AWS EC2. The application wil
 - [D]: API Gateway
 - [E]: CloudFront
 
-### *Answer: B & E*
+#### *Answer: B & E*
 
 This web application has global users and needs low latency. Both CloudFront and Global Accelerator can speed up the distribution of contents over the AWS global network.
 
@@ -89,7 +89,7 @@ You are deploying an application on Amazon EC2 that must call AWS APIs. Which me
 - [C]: Embed the API credentials into your application.
 - [D]: Assign IAM roles to the EC2 Instances.
 
-### *Answer: D*
+#### *Answer: D*
 
 You can use roles to delegate access to users, applications, or services that don't normally have access to your AWS resources. It is not a good practice to use IAM credentials for a production-based application. However, it is a good practice to use IAM Roles. [AWS IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)
 
@@ -104,7 +104,7 @@ What should the company do to improve the user experience of the website?
 - [C]: Resize the images so that they are smaller.
 - [D]: Use reserved EC2 Instances.
 
-### *Answer: B*
+#### *Answer: B*
 
 Amazon CloudFront is a web service that speeds up distribution of your static and dynamic web content, such as .html, .css, .js, and image files to your users. CloudFront delivers your content through a worldwide network of data centers called edge locations. When a user requests content that you're serving with CloudFront, the user is routed to the edge location that provides the lowest latency (time delay), so that the content is delivered with the best possible performance. If the content is already in the edge location with the lowest latency, CloudFront delivers it immediately. [AWS CloudFront](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html)
 
@@ -119,7 +119,7 @@ A Solutions Architect is designing a highly scalable system to track records. Th
 - [C]: Store the files in Amazon Glacier and create a Lifecycle Policy to remove files after 3 months.
 - [D]: Store the files in Amazon EFS and create a Lifecycle Policy to remove files after 3 months.
 
-### *Answer: B*
+#### *Answer: B*
 
 Lifecycle configuration enables you to specify the Lifecycle Management of objects in a bucket. The configuration is a set of one or more rules, where each rule defines an action for Amazon S3 to apply to a group of objects. These actions can be classified as follows:
 
@@ -143,11 +143,65 @@ A consulting firm repeatedly builds large architectures for their customers usin
 
 Which service should provide immediate benefits to the organization?
 
-- [A]: 
-- [B]: 
-- [C]: 
-- [D]: 
+- [A]: AWS Beanstalk
+- [B]: AWS CloudFormation
+- [C]: AWS CodeBuild
+- [D]: AWS CodeDeploy
 
-### *Answer: *
+#### *Answer: B*
 
+AWS Documentation mentions the following on AWS CloudFormation:
 
+AWS CloudFormation is a service that helps you model and set up your Amazon Web Service resources so that you can spend less time managing those resources and more time focusing on your applications that run in AWS. You create a template that describes all the AWS resources that you want (like Amazon EC2 instances or Amazon RDS DB instances), and AWS CloudFormation takes care of provisioning and configuring those resources for you. [AWS CloudFormation user guide](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
+
+AWS Elastic Beanstalk is an easy-to-use service for deploying and scaling web applications and services developed with Java, .NET, PHP, Node.js etc. You can upload your code, and Elastic Beanstalk automatically handles the deployment, from capacity provisioning, load balancing, auto-scaling to application health monitoring.
+
+In question mentioned that "A consulting firm **repeatedly builds large architectures for their customers using AWS resources from several AWS services including IAM, Amazon EC2, Amazon RDS, DynamoDB and Amazon VPC.**
+
+When you are building large architectures repeatedly, you can use the CloudFormation template to create or modify an existing AWS CloudFormation template. A template describes all of your resources and their properties. When you use that template to create an AWS CloudFormation stack, AWS CloudFormation provisions the Auto Scaling group, load balancer, and database for you. After the stack has been successfully created, your AWS resources are up and running. You can delete the stack just as easily, which deletes all the resources in the stack. By using AWS CloudFormation, you easily manage a collection of resources as a single unit. Whenever working with more number of AWS resources together, CloudFormation is the best option.
+
+### Question 18
+
+The security policy of an organization requires an application to encrypt data before writing to the disk. Which solution should the organization use to meet this requirement?
+
+- [A]: AWS KMS API
+- [B]: AWS Certificate Manager
+- [C]: API Gateway with STS
+- [D]: IAM Access Key
+
+#### *Answer: A*
+
+**Option B is incorrect.** The AWS Certificate Manager can be used to generate SSL certificates to encrypt traffic in transit, but not at rest.
+
+**Option C is incorrect.** It is used for issuing tokens while using the API gateway for traffic in transit.
+
+Option D is used for providing secure access to EC2 Instances. (Or sometimes other AWS resources)
+
+AWS Key Management Service (AWS KMS) is a managed service that makes it easy for you to create and control the encryption keys used to encrypt your data. AWS KMS is integrated with other AWS services including Amazon Elastic Block Store (Amazon EBS), Amazon Simple Storage Service (Amazon S3), Amazon Redshift, Amazon Elastic Transcoder, Amazon WorkMail, Amazon Relational Database Service (Amazon RDS), and others to make it simple to encrypt your data with encryption keys that you manage.
+
+[AWS KMS user guid](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+[AWS KMS API references](https://docs.aws.amazon.com/kms/latest/APIReference/kms-api-reference.pdf#Welcome)
+
+### Question 19
+
+You are an AWS Solutions Architect. Your company has a successful web application deployed across multiple AWS Regions. The application attracts more and more global customers. However, the application’s performance is impacted. Your manager asks you how to improve the performance and availability of the application. Which of the following AWS services would you recommend?
+
+- [A]: AWS DataSync
+- [B]: Amazon DynamoDB Accelerator
+- [C]: AWS Lake Formation
+- [D]: AWS Global Accelerator
+
+#### *Answer: D*
+
+AWS Global accelerator provides static IP addresses that are anycast in the AWS edge network. Incoming traffic is distributed across endpoints in AWS regions. The performance and availability of the application are improved. Therefore, Option D is correct, [AWS Global Accelerator use case](https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-benefits-of-migrating.html)
+
+### Question 20
+
+A retailer exports data daily from its transactional databases into an S3 bucket in the Sydney region. The retailer's Data Warehousing team wants to import this data into an existing Amazon Redshift cluster in their VPC in Sydney. Corporate security policy mandates that data can **only be transported within the AWS's private network.** 
+
+Which steps would satisfy the security policy?
+
+- [A]:
+- [B]:
+- [C]:
+- [D]:
