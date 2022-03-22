@@ -707,4 +707,166 @@ Which of the following can be used to satisfy these requirements? (SELECT TWO)
 - C: Use CloudWatch Metrics for the metrics that need to be monitored as per the requirement and set up an alarm activity to send out notifications when the metric reaches the set threshold limit.
 - D: Use custom log software to monitor the latency and read requests to the ELB.
 
-#### *Answer *
+#### *Answer: A & C*
+
+CloudTrail is a web service that records AWS API calls for all the resources in your AWS account. It also delivers log files to an Amazon S3 bucket. The recorded information includes the identity of the user, the start time of the AWS API call, the source IP address, the request parameters, and the response elements returned by the service.
+
+Amazon CloudWatch Logs are used to monitor, store, and access your log files from Amazon Elastic Compute Cloud (Amazon EC2) instances, AWS CloudTrail, Route 53, and other sources. CloudWatch Logs reports the data to a CloudWatch metric.
+
+**Option C is correct.** Use Cloudwatch Metrics for the metrics that need to be monitored as per the requirement. Set up an alarm activity to send out notifications when the metric reaches the set threshold limit.
+
+### Question 50 
+
+A company has resources hosted in its AWS Account. There is a requirement to monitor API activity for all regions and the audit needs to be applied for future regions as well. What would fulfill this requirement?
+
+- A: Ensure CloudTrail trail for each region, then enable trail for each future region.
+- B: Ensure one CloudTrail trail is enabled for all regions.
+- C: Create a CloudTrail for each region. Use CloudFormation to enable the trail for all future regions.
+- D: Create a CloudTrail for each region. Use AWS Config to enable the trail for all future regions.
+
+#### *Answer: B*
+
+You can now turn on a trail across all regions for your AWS account. CloudTrail will deliver log files from all regions to the Amazon S3 bucket and an optional CloudWatch Logs log group you specified. Additionally, when AWS launches a new region, CloudTrail will create the same trail in the new region. As a result, you will receive log files containing API activity for the new region without taking any action. [AWS CloudTrail Supports](https://aws.amazon.com/about-aws/whats-new/2015/12/turn-on-cloudtrail-across-all-regions-and-support-for-multiple-trails/)
+
+### Question 51 
+
+You are part of the IT sector at the finance department of your company. Your organization has implemented AWS Organizations for each internal department, and you have access to the master account. You need to manage Amazon EC2 Dedicated Hosts centrally, and share the host's instance capacity with other AWS accounts in the AWS Organizations. How can you accomplish this in the easiest way?
+
+- A: Use AWS Resource Access Manager to manage the EC2 Dedicated Hosts centrally and share them with other member accounts.
+- B: Use service control policies to share the EC2 Dedicated Hosts in the member accounts.
+- C: Use AWS Control Tower.
+- D: Create IAM policies with conditions and assign them to users in every member account.
+
+#### *Answer: A*
+
+**Option A is correct.** With AWS Resource manager, you can share resources with other AWS accounts joined to your AWS Organizations reducing the operational overhead. More details: [AWS Shareable resources](https://docs.aws.amazon.com/ram/latest/userguide/shareable.html#shareable-ec2)
+
+**Option B is incorrect.** SCP is not a service to share resources such as EC2 Dedicated Hosts with other accounts within the AWS Organizations.
+
+**Option C is incorrect.** AWS Control Tower is used to do automated deployments in multi-account environments.
+
+**Option D is incorrect.** Creating IAM policies is not used to manage and share resources within the AWS Organizations.
+
+### Question 52 
+
+Your company has an online game application deployed in an Auto Scaling group. The traffic of the application is predictable. Every Friday, the traffic starts to increase, remains high on weekends and then drops on Monday. You need to plan the scaling actions for the Auto Scaling group. Which method is the most suitable for the scaling policy?
+
+- A: Configure a scheduled CloudWatch event rule to launch/terminate instances at the specified time every week.
+- B: Create a predefined target tracking scaling policy based on the average CPU metric and the ASG will scale automatically.
+- C: Select the ASG and on the Automatic Scaling tab, add a step scaling policy to automatically scale out/in at fixed time every week.
+- D: Configure a scheduled action in the Auto Scaling group by specifying the recurrence, start/end time, capacities, etc.
+
+#### *Answer: D*
+
+**Option A is incorrect:** This option may work. However, you have to configure a target such as a Lambda function to perform the scaling actions.
+
+**Option B is incorrect:** The target tracking scaling policy defines a target for the ASG. The scaling actions do not happen based on a schedule.
+
+**Option C is incorrect:** The step scaling policy does not configure the ASG to scale at a specified time.
+
+**Option D is correct:** With scheduled scaling, users define a schedule for the ASG to scale. This option can meet the requirements.
+
+### Question 53 
+
+An application consists of frontend and backend EC2 Instances behind classic ELBs. The database is deployed in AWS RDS. You want both the application and the database should be highly scalable. What would you do? (Select TWO)
+
+- A: Use Auto Scaling for the frontend EC2 instances.
+- B: Use Auto Scaling for the backend EC2 instances.
+- C: Replace the Classic ELB with Application ELB.
+- D: Use Network ELB for both the frontend and backend instances.
+
+#### *Answer: A & B*
+
+When you see a requirement for scaling, consider the Auto Scaling service provided by AWS. This can be used to scale both the frontend and backend instances.
+
+### Question 54 
+
+There is a multi-region website hosted in AWS EC2 under an ELB. Route 53 is used to manage its DNS record. The website might get a lot of traffic over the next couple of weeks. If the application experiences a natural disaster in the region during the time, what should be used to reduce potential disruption to users?
+
+- A: Use an ELB to divert traffic to an Infrastructure hosted in another region.
+- B: Use an ELB to divert traffic to an Infrastructure hosted in another AZ.
+- C: Use CloudFormation to create backup resources in another AZ.
+- D: Use Route53 to route requests to another instance in a different region 
+
+#### *Answer: D*
+
+**NOTE:** ELB can only balance traffic in one region, not across multiple regions.
+
+The wording "to reduce the potential disruption in case of issues" points to a disaster recovery situation. There is more than one way to manage this situation. However, we need to choose the best option from the list given here. Out of this, the most suitable one is Option D.
+
+Most organizations try to implement High Availability (HA) instead of DR to guard them against any downtime of services. In the case of HA, we ensure that there exists a fallback mechanism for our services. The service that runs in HA is handled by hosts running in different availability zones but the same geographical region. However, this approach does not guarantee that our business will be up and running in case the entire region goes down.
+
+DR takes things to a completely new level, wherein you need to recover from a different region that is separated by over 250 miles. Our DR implementation is an Active/Passive model, meaning that we always have minimum critical services running in different regions. But a major part of the infrastructure is launched and restored when required.
+
+Usually, when we discuss a disaster recovery scenario, we assume that the entire region is affected due to some disaster. So we need the service to be provided from yet another region. So, setting up a solution in another AZ will not work as it is in the same region. Option A is incorrect though it mentions yet another region because ELBs cannot span across regions.
+
+So out of the options provided, Option D is the most suitable solution.
+
+### Question 55 
+
+You have a requirement to host a static website for a domain named mycompany.com in AWS.
+
+Which of the listed steps will you follow in order to set this up? (SELECT TWO.)
+
+- A: Host the static site on an EC2 Instance.
+- B: Use Route53 with static web site in S3.
+- C: Use Route53 as the domain registrar to register the domain name.
+- D: Place the EC2 instance behind the ELB.
+
+#### *Answer: B & C*
+
+You can register the domain name in your domain registrar (Route53) and then configure a record set in Route53 to host the static website in S3.
+
+### Question 56
+
+A database, hosted using the Amazon RDS service, is getting many database queries. It has now become a bottleneck for the associating application. Which action would ensure that the database is not a performance bottleneck?
+
+- A: Setup a CloudFront distribution in front of the database.
+- B: Setup an ELB in front of the database.
+- C: Setup ElastiCache in front of the database.
+- D: Setup SNS in front of the database.
+
+#### *Answer: C*
+
+ElastiCache is an in-memory solution that can be used in front of a database to cache the common queries issued against the database. This can reduce the overall load on the database.
+
+### Question 57 
+
+A database is being hosted using the Amazon RDS service. This database will be deployed in production and needs to be highly available. Which of the following could be used to achieve this requirement?
+
+- A: Use Multi-AZ for the RDS instance to ensure that a secondary database is created in another region.
+- B: Use the Read Replica feature to create another instance of the DB in another region.
+- C: Use Multi-AZ for the RDS instance to ensure that a secondary database is created in another Availability Zone.
+- D: Use the Read Replica feature to create another instance of the DB in another Availability Zone.
+
+#### *Answer: C*
+
+Multi-AZ spans within the same region at different availability zone, not multiple regions.
+
+**Amazon RDS Multi-AZ deployments** provide enhanced availability and durability for Database (DB) Instances. When you provision a Multi-AZ DB Instance, Amazon RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone (AZ).
+
+### Question 58 
+
+A company wants to host a web application and a database layer in AWS. This will be done with the use of subnets in a VPC.
+
+What would be a proper architectural design for supporting the required tiers of the application?
+
+- A: Use a public subnet for the web tier and another public subnet for the database layer.
+- B: Use a public subnet for the web tier and a private subnet for the database layer.
+- C: Use a private subnet for the web tier and another private subnet for the database layer.
+- D: Use a private subnet for the web tier and a public subnet for the database layer.
+
+#### *Answer: B*
+
+The ideal setup is to ensure that the webserver is hosted in the public subnet so that users on the internet can access it. The database server can be hosted in the private subnet.
+
+### Question 59 
+
+You need to launch several EC2 instances to run Cassandra. There are large distributed and replicated workloads in Cassandra and you plan to launch instances using EC2 placement groups. The traffic should be distributed evenly across several partitions and each partition should contain multiple instances. Which strategy would you use when launching the placement groups?
+
+- A: Cluster placement strategy.
+- B: Spread placement strategy.
+- C: Partition placement strategy.
+- D: Network placement strategy.
+
+#### *Answer: *
