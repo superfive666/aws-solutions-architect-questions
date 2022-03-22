@@ -1,5 +1,193 @@
 # CSAA Practice Test 1
 
+### Question 1 
+
+You are working as an AWS Architect for a start-up company. They have a two-tier production website. Database servers are spread across multiple Availability Zones and are stateful.
+
+You have configured Auto Scaling Group for these database servers with a minimum of 2 instances & a maximum of 6 instances. During post-peak hours, you observe some data loss. Which feature needs to be configured additionally to avoid future data loss (and copy data before instance termination)?
+
+- A: Modify the cooldown period to complete custom actions before the Instance terminates.
+- B: Add lifecycle hooks to Auto Scaling group.
+- C: Customize Termination policy to complete data copy before termination.
+- D: Suspend Terminate process that will avoid data loss.
+
+#### *Answer: B*
+
+Adding Lifecycle Hooks to the Auto Scaling group puts the instance into a wait state before termination. During this wait state, you can perform custom activities to retrieve critical operational data from a stateful instance. The Default Wait period is 1 hour.
+
+**Option A is incorrect** as the cooldown period will not help copy data from the instance before termination.
+
+**Option C is incorrect** as the Termination policy is used to specify which instances to terminate first during scale in. Configuring termination policy for the Auto Scaling group will not copy data before instance termination.  
+
+**Option D is incorrect** as the Suspending Terminate policy will not prevent data loss but disrupt other processes & prevent scale-in.
+
+### Question 2 
+
+You have an application running in us-west-2 that requires 6 EC2 Instances running at all times. With 3 Availability Zones in the region viz. us-west-2a, us-west-2b, and us-west-2c, which of the following deployments provides fault tolerance if ONE Availability Zone in us-west-2 becomes unavailable? (SELECT TWO.)
+
+- A: 2 EC2 Instances in us-west-2a, 2 EC2 Instances in us-west-2b, and 2 EC2 Instances in us-west-2c
+- B: 3 EC2 Instances in us-west-2a, 3 EC2 Instances in us-west-2b, and no EC2 Instances in us-west-2c
+- C: 4 EC2 Instances in us-west-2a, 2 EC2 Instances in us-west-2b, and 2 EC2 Instances in us-west-2c
+- D: 6 EC2 Instances in us-west-2a, 6 EC2 Instances in us-west-2b, and no EC2 Instances in us-west-2c
+- E: 3 EC2 Instances in us-west-2a, 3 EC2 Instances in us-west-2b, and 3 EC2 Instances in us-west-2c
+
+#### *Answer: D & E*
+
+### Question 3 
+
+An application allows a manufacturing site to upload files. Each uploaded 2500 MB file is processed to extract metadata, and this process takes a few seconds per file. The frequency at which the uploading happens is unpredictable. For instance, there may be no upload for hours, followed by several files being uploaded concurrently.
+
+- A: Use a Kinesis Data Delivery Stream to store the file. Use Lambda for processing.
+- B: Use an SQS queue to store the file to be accessed by a fleet of EC2 Instances.
+- C: Store the file in an EBS volume, which can then be accessed by another EC2 Instance for processing.
+- D: Store the file in an S3 bucket. Use Amazon S3 event notification to invoke a Lambda function for file processing.
+
+#### *Answer: D*
+
+**Option A is incorrect** as Kinesis is used to collect, process and analyze real-time data.
+
+**Option B is incorrect** as SQS cannot store a message that is 3GB. The maximum payload supported by SQS is 2GB. To manage large Amazon Simple Queue Service (Amazon SQS) messages, you can use Amazon Simple Storage Service (Amazon S3) and the Amazon SQS Extended Client Library for Java. This is especially useful for storing and consuming messages up to 2 GB.
+
+**Option C is incorrect** as EBS is a service to provide block-level storage. S3 is more suitable in this scenario.
+
+**Note:** The total volume of data and the number of objects you can store are unlimited. Individual Amazon S3 objects can range in size from a minimum of 0 bytes to a maximum of 5 terabytes. The largest object that can be uploaded in a single PUT is 5 gigabytes.
+
+### Question 4 
+
+You are part of the IT team of a streaming application. Your application is hosted in two separate regions, us-east-1(N Virginia) and ap-south-1 (Mumbai). Your application recently became very popular, and now you have users from all around the world. However, these new users have been experiencing high latency in the application. How can you solve this problem, keeping in mind that possible failovers in the app need to be solved very quickly?
+
+- A: Enable a DNS-based traffic management solution with Geolocation route policies in Route53.
+- B: Enable AWS WAF to securely serve your application content to the nearest Edge Locations to the users.
+- C: Enable Global Accelerator endpoint for your two regions.
+- D: Enable Direct Connect
+
+#### *Answer: C*
+
+**Option A is incorrect** because if there is a failover, you will need to modify the source application's IP address or configure Route53 records. That will take time to solve the failover. More details please check [Geolocation routing policy](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html#routing-policy-geo)
+
+**Option B is incorrect** because AWS WAF is a service to protect applications from attacks. It does not help to improve the performance or reduce latency.
+
+**Option C is correct** because AWS Global Accelerator is a service that redirects users requests to the nearest edge location and then routes the data to the Amazon global network, increasing the speed and security of data transfer, therefore, increasing the performance of our applications. It also reroutes requests to healthy IPs if it fails and changes propagations. It is automatic and lasts some seconds. More details please check [AWS Global Accelerator](https://aws.amazon.com/global-accelerator/faqs/)
+
+**Option D is incorrect** because Direct Connect is a service used to increase data transfer between On-Premise data centers and AWS services. More details: [AWS Direct Connect](https://aws.amazon.com/directconnect/)
+
+**Q: How is AWS Global Accelerator different from a DNS-based traffic management solution?**
+
+A: First, some client devices and internet resolvers cache DNS answers for long periods of time. So when you make a configuration update, or there’s an application failure or change in your routing preference, you don’t know how long it will take before all of your users receive updated IP addresses. With AWS Global Accelerator, you don’t have to rely on the IP address caching settings of client devices. Change propagation takes a matter of seconds, which reduces your application downtime. Second, with Global Accelerator, you get static IP addresses that provide a fixed entry point to your applications. This lets you easily move your endpoints between Availability Zones or between AWS Regions, without having to update the DNS configuration or client-facing applications.
+
+### Question 5 
+
+For which of the following scenarios should a Solutions Architect consider using ElasticBeanStalk? (Choose TWO.)
+
+- A: A Java web application using Amazon Linux EC2 instances
+- B: An Enterprise Data Warehouse
+- C: Configuring AWS resources using Chef
+- D: A worker environment with an SQS queue and an Auto Scaling group
+- E: A management task run once on nightly basis
+
+#### *Answer: A & D*
+
+AWS Documentation clearly mentions that the Elastic Beanstalk component can create Web Server environments and Worker environments.
+
+The following diagram illustrates an example of Elastic Beanstalk architecture for a web server environment tier and shows how the components in that type of environment tier work together. [Managing environment tiers](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features-managing-env-tiers.html)
+For more information on AWS Elastic beanstalk Web server environments, please visit the URL https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts-webserver.html
+
+Option B is incorrect. Elastcibeanstalk is used to deploy and manage the applications on AWS. It's not used to store the data. https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html. For more information on AWS Elastic beanstalk Worker environments, please visit the following URL: https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts-worker.html
+
+Option C is incorrect. OpsWorks is more suitable when Chef is used to configure AWS resources.
+
+Option D is correct. The worker environments in Elastic Beanstalk include an Auto Scaling group and an SQS queue. This option is suitable.
+
+Option E is incorrect. When you launch an Elastic Beanstalk environment, you first choose an environment tier. The environment tier that you choose determines whether Elastic Beanstalk provisions resources to support an application that handles HTTP requests or an application that pulls tasks from a queue. An application that serves HTTP requests runs in a web server environment. An environment that pulls tasks from an Amazon Simple Queue Service queue runs in a worker environment.
+
+Further, when you create an environment, Elastic Beanstalk provisions the resources required to run your application. AWS resources created for an environment include one elastic load balancer (ELB in the diagram), an Auto Scaling group, and one or more Amazon EC2 instances.
+
+### Question 6 
+
+You need to install a 150 GB volume on an EC2 Instance for a new application. While the data in the volume is used less frequently with small peaks in the morning and evening, Which storage type would be the most cost-effective option for the given requirement?
+
+- A: Amazon EBS provisioned IOPS SSD.
+- B: Amazon EBS Cold HDD.
+- C: Amazon EBS General Purpose SSD.
+- D: Amazon EFS.
+
+#### *Answer: B*
+
+The volume data is used infrequently, not throughout the day, and the question requires the MOST cost-effective storage type. So the preferred choice would be Amazon Cold HDD. Cold HDD is suitable for the following scenarios:
+
+Throughput-oriented storage for data that is infrequently accessed.
+
+Scenarios where the lowest storage cost is important.
+
+The volume size of EBS Cold HDD is 125 GiB - 16 TiB. The database size is 150G and is suitable in this scenario.
+
+Option D is incorrect because EFS is file storage, not block or volume storage.
+
+Note: IOPS measures the number of reads and writes operations per second, while throughput measures the number of bits read or written per second.
+
+### Question 7
+
+You are working as an AWS consultant for a start-up company. They have developed a web application, that requires a lot of memory, for their employees to share files with external vendors securely. They created an AutoScaling group for the web servers that require two m4.large EC2 instances running at all times, scaling up to a maximum of twelve instances. Post-deployment of the application, a huge rise in cost was observed. Due to a limited budget, the CTO has requested your advice to optimize the usage of instances in the Auto Scaling groups. What do you suggest for reducing the costs and minimizing the risk of adverse impact on the performance?
+
+- A: Create an Auto Scaling group with t2. micro On-Demand instances.
+- B: Create an Auto Scaling group with a mix of On-Demand & Spot Instance. Select the On-Demand base as zero. Above On-Demand base, select 100% of On-Demand instance & 0% of Spot Instance.
+- C: Create an Auto Scaling group with all Spot Instance.
+- D: Create an Auto Scaling group with a mix of On-Demand & Spot Instance. Select the On-Demand base as 2. Above On-Demand base, select 20% of On-Demand instance & 80% of Spot Instance.
+
+#### *Answer: D*
+
+Auto Scaling group supports a mix of On-Demand & Spot instances, which helps design a cost-optimized solution without impacting the performance. You can choose the percentage of On-Demand & Spot instances based on the application requirements. With Option D, the Auto Scaling group will have 2 instances initially as the On-Demand instances. In contrast, the remaining instances will be launched in a 20 % On-Demand instance & 80% Spot Instance ratio. 
+
+No matter, if 80% of spot instances get terminated. The required 20% on-demand will be available with 2 on-demand instances always running.
+
+Option A is incorrect. With t2. Micro, there would be a cost reduction, but it will impact the performance of the application. The question requires that the performance is not impacted, so changing the instance type is not suitable.
+
+Option B is incorrect as there would not be any cost reduction with all On-Demand instances.
+
+Option C is incorrect. Although this will reduce cost, all spot instances in an auto-scaling group may cause inconsistencies in the application & lead to poor performance.
+
+### Question 8 
+
+You are working as an AWS Architect for a start-up company. The company has a two-tier production website on AWS with web servers in the front end & database servers in the back end. The third-party firm has been looking after the operations of these database servers. They need to access these database servers in private subnets on the SSH port. As per standard operating procedure provided by the Security team, all access to these servers should be over a jumpbox accessible from internet. What will be the best solution to meet this requirement?
+
+- A: Deploy Bastion hosts in Private Subnet
+- B: Deploy NAT Instance in Private Subnet
+- C: Deploy NAT Instance in Public Subnet
+- D: Deploy Bastion hosts in Public Subnet
+
+#### *Answer: D*
+
+External users will be unable to access the instance in private subnets directly. To provide such access, we need to deploy Bastion hosts in public subnets. In case of the above requirement, third-party users will initiate a connection to Bastion hosts in public subnets & from there, they will access SSH connection to database servers in private subnets.
+
+Option A is incorrect as Bastion hosts need to be in Public subnets & not in Private subnets, as third-party users will be accessing these servers from the internet.
+
+Option B is incorrect as NAT instance is used to provide internet traffic to hosts in private subnets. Users from the internet will not be able to do SSH connections to hosts in private subnets using NAT instance. NAT instance is always present in Public subnets.
+
+Option C is incorrect as NAT instance is used to provide internet traffic to hosts in private subnets. Users from the internet will not be able to do SSH connections to hosts in private subnets using NAT instance.
+
+### Question 9 
+
+An AWS Solutions Architect designing a solution to store and archive corporate documents has determined Amazon Glacier as the right choice. 
+
+An important requirement is that the data must be delivered within 5 minutes of a retrieval request.
+
+Which feature in Amazon Glacier could help to meet this requirement?
+
+- A: Vault Lock
+- B: Expedited retrieval
+- C: Bulk retrieval
+- D: Standard retrieval
+
+#### *Answer: B* 
+
+AWS Documentation mentions the following:
+
+Expedited retrievals allow you to access data in 1–5 minutes for a flat rate of $0.03 per GB retrieved. Expedited retrievals allow you to quickly access your data when occasional urgent requests for a subset of archives are required.
+
+The Vault Lock and Standard Retrieval are standard with 3-5 hours retrieval time while Bulk retrievals which can be considered the cheapest option have 5-12 hours retrieval time. 
+
+For more information on AWS Glacier Retrieval, please visit the following URL: [Downloading archive two steps](https://docs.aws.amazon.com/amazonglacier/latest/dev/downloading-an-archive-two-steps.html)
+
 ### Question 10
 
 You are working for a start-up company that develops mobile gaming applications using AWS resources. For creating AWS resources, the project team is using CloudFormation Templates. The Project Team is concerned about the changes made in EC2 instance properties by the Operations Team, apart from parameters specified in CloudFormation Templates. To observe changes in AWS EC2 instance, you advise using CloudFormation Drift Detection. After Drift detection, when you check drift status for all AWS EC2 instances, drift for certain property values with default values for resource properties is not displayed. What would you do to include these resource properties to be captured in CloudFormation Drift Detection?
