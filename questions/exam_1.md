@@ -201,7 +201,136 @@ A retailer exports data daily from its transactional databases into an S3 bucket
 
 Which steps would satisfy the security policy?
 
-- [A]:
-- [B]:
-- [C]:
-- [D]:
+- [A]: Enable Amazon Redshift Enhanced VPC Routing.
+- [B]: Create a Cluster Security Group to allow the Amazon Redshift cluster to access Amazon S3.
+- [C]: Create a NAT gateway in a public subnet to allow the Amazon Redshift cluster to access Amazon S3.
+- [D]: Create and configure an Amazon S3 VPC endpoint.
+
+#### *Answer: A & D*
+
+Amazon Redshift Enhanced VPC Routing provides VPC resources access to Redshift.
+
+Redshift will not be able to access the S3 VPC endpoints without enabling Enhanced VPC routing. So one option will not support the scenario if another is not selected.
+
+NAT instance (the proposed answer) cannot be reached by Redshift without enabling Enhanced VPC Routing. [AWS RedShift Enhanced VPC Routing](https://aws.amazon.com/about-aws/whats-new/2016/09/amazon-redshift-now-supports-enhanced-vpc-routing/)
+
+VPC Endpoints - It enables you to privately connect your VPC to the supported AWS Services and VPC Endpoint services powered by PrivateLink without requiring an IGW, NAT Device, VPN Connection or AWS Direct Connect connections. Instances in VPC do not require Public IP addresses to communicate with resources in the service and traffic between your VPC and other service does not leave the Amazon network.
+
+S3 VPC Endpoint - it is a feature that will allow you to make even better use of VPC and S3.
+
+### Question 21
+
+A team is building an application that must persist and index JSON data in a highly available data store. The latency of data access must remain consistent despite very high application traffic.
+
+Which service would help the team to meet the above requirement?
+
+- [A]: Amazon EFS
+- [B]: Amazon Redshift
+- [C]: DynamoDB
+- [D]: AWS CloudFormation
+
+#### *Answer: C*
+
+Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability.
+
+The data in DynamoDB is stored in JSON format. Hence it is the perfect data storage to meet the requirement mentioned in the question.
+
+[AWS DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
+
+### Question 22 
+
+An organization hosts a multi-language website on AWS, which is served using CloudFront. Language is specified in the HTTP request as shown below:
+
+- http://d11111f8.cloudfront.net/main.html?language=de 
+- http://d11111f8.cloudfront.net/main.html?language=en 
+- http://d11111f8.cloudfront.net/main.html?language=es 
+
+How should AWS CloudFront be configured to deliver cached data in the correct language?
+
+- [A]: Forward cookies to the origin 
+- [B]: Based on query string parameters
+- [C]: Cache objects at the origin
+- [D]: Serve dynamic content
+
+#### *Answer: B*
+
+Since language is specified in the query string parameters, CloudFront should be configured for the same.
+For more information on configuring CloudFront via query string parameters, please visit the following URL: [AWS CloudFront Query String](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/QueryStringParameters.html)
+
+### Question 23 
+
+You have developed a new web application on AWS for a real estate firm. It has a web interface where real estate employees upload photos of newly constructed houses in S3 buckets. Prospective buyers log in to the website and access photos. The marketing team has initiated an intensive marketing event to promote new housing schemes which will lead to customers who frequently access these images. As this is a new application, you have no projection of traffic on the S3 bucket. You need an S3 storage class that can automatically optimize the storage costs with changing access patterns. Which of the following is a recommended storage solution to meet this requirement?
+
+- [A]: Use One Zone-IA storage class to store all images.
+- [B]: Use Standard-IA to store all images.
+- [C]: Use S3 Intelligent-Tiering storage class.
+- [D]: Use Standard storage class and use Storage class analytics to identify & move objects using lifecycle policies.
+
+#### *Answer: C*
+
+When the access pattern to web applications using S3 storage buckets is unpredictable, you can use S3 intelligent-Tiering storage class. S3 Intelligent-Tiering storage class includes two access tiers: frequent access and infrequent access. Based upon access patterns, it moves data between these tiers, which helps in cost saving. S3 Intelligent-Tiering storage class has the same performance as that of Standard storage class.
+
+**Option A is incorrect.** Although it will save costs, it will not provide any protection in case of AZ failure. Also, this class is suitable for infrequently accessed data & not for frequently access data.
+
+**Option B is incorrect** as Standard-IA storage class is for infrequently accessed data & there are retrieval charges associated. In the above requirement, you do not know the data access pattern, which may result in a higher cost.
+
+**Option D is incorrect.** It has operational overhead to set up Storage class analytics & moves objects between various classes. Also, since the access pattern is undetermined, this will run into a costlier option.
+
+### Question 24
+
+You are part of the IT team of an assurance company. You have been having a consistent amount of usage of your EC2 instances and Fargate. However, there is also a consistent amount of usage increase. Because of this, you can predict that you may need to increase the size of the instances in 2 or 3 years. The finance team has asked you if there is a way to save costs in the EC2 instances and Fargate. What do you suggest?
+
+- [A]: Purchase a Compute Saving plan.
+- [B]: Purchase an EC2 instance saving plan.
+- [C]: Purchase a Convertible Reserved Instance.
+- [D]: Purchase a Standard Reserved Instance.
+
+#### *Answer: A*
+
+**Option A is correct.** With a Compute Saving Plan, you can save up to 66% and it applies to Fargate and EC2 instances. It also lets you change the instance's family and size. More details-[AWS Savings Plan](https://aws.amazon.com/savingsplans/faq/)
+
+**Option B is incorrect.** The EC2 instance saving plan does not automatically apply to Fargate instances. 
+
+**Option C and D are incorrect.** Reserved instances do not save the cost of Fargate. [AWS Reserved Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html)
+
+### Question 25 
+
+A company is generating large datasets with millions of rows to be summarized column-wise. To build daily reports from these data sets, Business Intelligence tools would be used.
+
+Which storage service would meet these requirements?
+
+- [A]: Amazon Redshift
+- [B]: Amazon RDS
+- [C]: ElasticCache
+- [D]: DynamoDB
+
+#### *Answer: A*
+
+Amazon Redshift is a fully managed, petabyte-scale data warehouse service in the cloud. You can start with just a few hundred gigabytes of data and scale to a petabyte or more. This enables you to use your data to acquire new insights for your business and customers. [AWS Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/welcome.html)
+
+Columnar storage for database tables is an important factor in optimizing analytic query performance because it drastically reduces the overall disk I/O requirements and the amount of data you need to load from disk. Amazon Redshift uses a block size of 1 MB, which is more efficient and further reduces the number of I/O requests needed to perform any database loading or other operations that are part of query execution.[AWS Columnar Storage](https://docs.aws.amazon.com/redshift/latest/dg/c_columnar_storage_disk_mem_mgmnt.html)
+
+### Question 26 
+
+A company is developing a web application to be hosted in AWS. This application needs a data store for session data.
+
+As an AWS Solution Architect, what would you recommend as an ideal option to store session data? (SELECT TWO)
+
+- [A]: CloudWatch
+- [B]: DynamoDB
+- [C]: Elastic Load Balancing
+- [D]: ElasticCache
+- [E]: Storage Gateway
+
+#### *Answer: B & D*
+
+DynamoDB and ElastiCache are perfect options for storing session data.
+
+Amazon DynamoDB is a fast and flexible NoSQL database service for all applications that need consistent, single-digit millisecond latency at any scale. It is a fully managed cloud database and supports both document and key-value store models. Its flexible data model, reliable performance, and automatic scaling of throughput capacity make it a great fit for mobile, web, gaming, ad tech, IoT, and many other applications.
+
+AWS ElastiCache is a web service that makes it easy to set up, manage, and scale a distributed in-memory data store or cache environment in the cloud. It provides a high-performance, scalable, and cost-effective caching solution while removing the complexity associated with the deployment and management of a distributed cache environment.
+
+### Question 27 
+
+
+
