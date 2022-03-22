@@ -4,10 +4,10 @@
 
 You are working for a start-up company that develops mobile gaming applications using AWS resources. For creating AWS resources, the project team is using CloudFormation Templates. The Project Team is concerned about the changes made in EC2 instance properties by the Operations Team, apart from parameters specified in CloudFormation Templates. To observe changes in AWS EC2 instance, you advise using CloudFormation Drift Detection. After Drift detection, when you check drift status for all AWS EC2 instances, drift for certain property values with default values for resource properties is not displayed. What would you do to include these resource properties to be captured in CloudFormation Drift Detection?
 
-- [A]: Run CloudFormation Drift Detection on individual stack resources instead of entire CloudFormation stack.
-- [B]: Explicitly set the property value, which can be the same as the default value.
-- [C]: Manually check these resources as this is not supported in CloudFormation Drift Detection.
-- [D]: Assign Read permission to CloudFormation Drift Detection to determine drift.
+- A: Run CloudFormation Drift Detection on individual stack resources instead of entire CloudFormation stack.
+- B: Explicitly set the property value, which can be the same as the default value.
+- C: Manually check these resources as this is not supported in CloudFormation Drift Detection.
+- D: Assign Read permission to CloudFormation Drift Detection to determine drift.
 
 #### *Answer: B*
 
@@ -25,10 +25,10 @@ For more information on AWS CloudFormation Drift Detection, refer to [AWS CloudF
 
 You are responsible for performing a migration from your company's on-premise data to the AWS cloud. You have about 400 GB of data stored in an NFS. One requirement of this migration is to transfer some of this data to AWS EFS and the other part to S3. Which is the easiest to use and with the most cost-effective solution?
 
-- [A]: Use AWS Storage gateway.
-- [B]: Use S3 Transfer Acceleration.
-- [C]: Use S3 DataSync.
-- [D]: Use AWS Database Migration Service.
+- A: Use AWS Storage gateway.
+- B: Use S3 Transfer Acceleration.
+- C: Use S3 DataSync.
+- D: Use AWS Database Migration Service.
 
 #### *Answer: C*
 
@@ -44,11 +44,11 @@ DataSync is a service used to transfer data between on-premise storage to AWS S3
 
 A company hosts a popular web application that connects to an Amazon RDS MySQL DB instance running in a default VPC private subnet with NACL settings that was created by AWS as default. The web servers must be accessible only to customers on HTTPS connections, and the database must only be accessible to web servers in a public subnet. Which solution would meet these requirements without impacting other applications? (SELECT TWO)
 
-- [A]: Create a network ACL on the Web Server's subnets, allow HTTPS port 443 inbound and specify the source as 0.0.0.0/0.
-- [B]: Create a Web Server security group that allows HTTPS port 443 inbound traffic from anywhere (0.0.0.0/0) and apply it to the Web Servers.
-- [C]: Create a DB Server security group that allows MySQL port 3306 inbound and specify the source as the Web Server security group.
-- [D]: Create a network ACL on the DB subnet, allow MySQL port 3306 inbound for Web Servers and deny all outbound traffic.
-- [E]: Create a DB Server security group that allows HTTPS port 443 inbound and specify the source as a Web Server security group.
+- A: Create a network ACL on the Web Server's subnets, allow HTTPS port 443 inbound and specify the source as 0.0.0.0/0.
+- B: Create a Web Server security group that allows HTTPS port 443 inbound traffic from anywhere (0.0.0.0/0) and apply it to the Web Servers.
+- C: Create a DB Server security group that allows MySQL port 3306 inbound and specify the source as the Web Server security group.
+- D: Create a network ACL on the DB subnet, allow MySQL port 3306 inbound for Web Servers and deny all outbound traffic.
+- E: Create a DB Server security group that allows HTTPS port 443 inbound and specify the source as a Web Server security group.
 
 #### *Answer: B & C*
 
@@ -60,11 +60,11 @@ A company hosts a popular web application that connects to an Amazon RDS MySQL D
 
 You lead a team to develop a new web application in AWS EC2. The application will have a large number of users globally. For a great user experience, this application requires very low network latency and jitter. If the network speed is not fast enough, you will lose customers. Which tool would you choose to improve the application performance? (Select TWO.)
 
-- [A]: AWS VPN
-- [B]: AWS Global Accelerator
-- [C]: Direct connect
-- [D]: API Gateway
-- [E]: CloudFront
+- A: AWS VPN
+- B: AWS Global Accelerator
+- C: Direct connect
+- D: API Gateway
+- E: CloudFront
 
 #### *Answer: B & E*
 
@@ -84,10 +84,10 @@ This web application has global users and needs low latency. Both CloudFront and
 
 You are deploying an application on Amazon EC2 that must call AWS APIs. Which method would you use to allow the application access to the APIs securely?
 
-- [A]: Pass API credentials to the instance using Instance userdata.
-- [B]: Store API credentials as an object in Amazon S3.
-- [C]: Embed the API credentials into your application.
-- [D]: Assign IAM roles to the EC2 Instances.
+- A: Pass API credentials to the instance using Instance userdata.
+- B: Store API credentials as an object in Amazon S3.
+- C: Embed the API credentials into your application.
+- D: Assign IAM roles to the EC2 Instances.
 
 #### *Answer: D*
 
@@ -99,10 +99,10 @@ A website runs on EC2 Instances behind an Application Load Balancer. The instanc
 
 What should the company do to improve the user experience of the website?
 
-- [A]: Move the digital assets to Amazon Glacier.
-- [B]: Cache static content using CloudFront.
-- [C]: Resize the images so that they are smaller.
-- [D]: Use reserved EC2 Instances.
+- A: Move the digital assets to Amazon Glacier.
+- B: Cache static content using CloudFront.
+- C: Resize the images so that they are smaller.
+- D: Use reserved EC2 Instances.
 
 #### *Answer: B*
 
@@ -114,10 +114,10 @@ In addition, the glacier is not used for frequent retrievals. So Option A is not
 
 A Solutions Architect is designing a highly scalable system to track records. These records must remain available for immediate download for up to three months and then must be deleted. What is the most appropriate decision for this use case?
 
-- [A]: Store the files in Amazon EBS and create a Lifecycle Policy to remove files after 3 months.
-- [B]: Store the files in Amazon S3 and create a Lifecycle Policy to remove files after 3 months.
-- [C]: Store the files in Amazon Glacier and create a Lifecycle Policy to remove files after 3 months.
-- [D]: Store the files in Amazon EFS and create a Lifecycle Policy to remove files after 3 months.
+- A: Store the files in Amazon EBS and create a Lifecycle Policy to remove files after 3 months.
+- B: Store the files in Amazon S3 and create a Lifecycle Policy to remove files after 3 months.
+- C: Store the files in Amazon Glacier and create a Lifecycle Policy to remove files after 3 months.
+- D: Store the files in Amazon EFS and create a Lifecycle Policy to remove files after 3 months.
 
 #### *Answer: B*
 
@@ -143,10 +143,10 @@ A consulting firm repeatedly builds large architectures for their customers usin
 
 Which service should provide immediate benefits to the organization?
 
-- [A]: AWS Beanstalk
-- [B]: AWS CloudFormation
-- [C]: AWS CodeBuild
-- [D]: AWS CodeDeploy
+- A: AWS Beanstalk
+- B: AWS CloudFormation
+- C: AWS CodeBuild
+- D: AWS CodeDeploy
 
 #### *Answer: B*
 
@@ -164,10 +164,10 @@ When you are building large architectures repeatedly, you can use the CloudForma
 
 The security policy of an organization requires an application to encrypt data before writing to the disk. Which solution should the organization use to meet this requirement?
 
-- [A]: AWS KMS API
-- [B]: AWS Certificate Manager
-- [C]: API Gateway with STS
-- [D]: IAM Access Key
+- A: AWS KMS API
+- B: AWS Certificate Manager
+- C: API Gateway with STS
+- D: IAM Access Key
 
 #### *Answer: A*
 
@@ -186,10 +186,10 @@ AWS Key Management Service (AWS KMS) is a managed service that makes it easy for
 
 You are an AWS Solutions Architect. Your company has a successful web application deployed across multiple AWS Regions. The application attracts more and more global customers. However, the application’s performance is impacted. Your manager asks you how to improve the performance and availability of the application. Which of the following AWS services would you recommend?
 
-- [A]: AWS DataSync
-- [B]: Amazon DynamoDB Accelerator
-- [C]: AWS Lake Formation
-- [D]: AWS Global Accelerator
+- A: AWS DataSync
+- B: Amazon DynamoDB Accelerator
+- C: AWS Lake Formation
+- D: AWS Global Accelerator
 
 #### *Answer: D*
 
@@ -201,10 +201,10 @@ A retailer exports data daily from its transactional databases into an S3 bucket
 
 Which steps would satisfy the security policy?
 
-- [A]: Enable Amazon Redshift Enhanced VPC Routing.
-- [B]: Create a Cluster Security Group to allow the Amazon Redshift cluster to access Amazon S3.
-- [C]: Create a NAT gateway in a public subnet to allow the Amazon Redshift cluster to access Amazon S3.
-- [D]: Create and configure an Amazon S3 VPC endpoint.
+- A: Enable Amazon Redshift Enhanced VPC Routing.
+- B: Create a Cluster Security Group to allow the Amazon Redshift cluster to access Amazon S3.
+- C: Create a NAT gateway in a public subnet to allow the Amazon Redshift cluster to access Amazon S3.
+- D: Create and configure an Amazon S3 VPC endpoint.
 
 #### *Answer: A & D*
 
@@ -224,10 +224,10 @@ A team is building an application that must persist and index JSON data in a hig
 
 Which service would help the team to meet the above requirement?
 
-- [A]: Amazon EFS
-- [B]: Amazon Redshift
-- [C]: DynamoDB
-- [D]: AWS CloudFormation
+- A: Amazon EFS
+- B: Amazon Redshift
+- C: DynamoDB
+- D: AWS CloudFormation
 
 #### *Answer: C*
 
@@ -247,10 +247,10 @@ An organization hosts a multi-language website on AWS, which is served using Clo
 
 How should AWS CloudFront be configured to deliver cached data in the correct language?
 
-- [A]: Forward cookies to the origin 
-- [B]: Based on query string parameters
-- [C]: Cache objects at the origin
-- [D]: Serve dynamic content
+- A: Forward cookies to the origin 
+- B: Based on query string parameters
+- C: Cache objects at the origin
+- D: Serve dynamic content
 
 #### *Answer: B*
 
@@ -261,10 +261,10 @@ For more information on configuring CloudFront via query string parameters, plea
 
 You have developed a new web application on AWS for a real estate firm. It has a web interface where real estate employees upload photos of newly constructed houses in S3 buckets. Prospective buyers log in to the website and access photos. The marketing team has initiated an intensive marketing event to promote new housing schemes which will lead to customers who frequently access these images. As this is a new application, you have no projection of traffic on the S3 bucket. You need an S3 storage class that can automatically optimize the storage costs with changing access patterns. Which of the following is a recommended storage solution to meet this requirement?
 
-- [A]: Use One Zone-IA storage class to store all images.
-- [B]: Use Standard-IA to store all images.
-- [C]: Use S3 Intelligent-Tiering storage class.
-- [D]: Use Standard storage class and use Storage class analytics to identify & move objects using lifecycle policies.
+- A: Use One Zone-IA storage class to store all images.
+- B: Use Standard-IA to store all images.
+- C: Use S3 Intelligent-Tiering storage class.
+- D: Use Standard storage class and use Storage class analytics to identify & move objects using lifecycle policies.
 
 #### *Answer: C*
 
@@ -280,10 +280,10 @@ When the access pattern to web applications using S3 storage buckets is unpredic
 
 You are part of the IT team of an assurance company. You have been having a consistent amount of usage of your EC2 instances and Fargate. However, there is also a consistent amount of usage increase. Because of this, you can predict that you may need to increase the size of the instances in 2 or 3 years. The finance team has asked you if there is a way to save costs in the EC2 instances and Fargate. What do you suggest?
 
-- [A]: Purchase a Compute Saving plan.
-- [B]: Purchase an EC2 instance saving plan.
-- [C]: Purchase a Convertible Reserved Instance.
-- [D]: Purchase a Standard Reserved Instance.
+- A: Purchase a Compute Saving plan.
+- B: Purchase an EC2 instance saving plan.
+- C: Purchase a Convertible Reserved Instance.
+- D: Purchase a Standard Reserved Instance.
 
 #### *Answer: A*
 
@@ -299,10 +299,10 @@ A company is generating large datasets with millions of rows to be summarized co
 
 Which storage service would meet these requirements?
 
-- [A]: Amazon Redshift
-- [B]: Amazon RDS
-- [C]: ElasticCache
-- [D]: DynamoDB
+- A: Amazon Redshift
+- B: Amazon RDS
+- C: ElasticCache
+- D: DynamoDB
 
 #### *Answer: A*
 
@@ -316,11 +316,11 @@ A company is developing a web application to be hosted in AWS. This application 
 
 As an AWS Solution Architect, what would you recommend as an ideal option to store session data? (SELECT TWO)
 
-- [A]: CloudWatch
-- [B]: DynamoDB
-- [C]: Elastic Load Balancing
-- [D]: ElasticCache
-- [E]: Storage Gateway
+- A: CloudWatch
+- B: DynamoDB
+- C: Elastic Load Balancing
+- D: ElasticCache
+- E: Storage Gateway
 
 #### *Answer: B & D*
 
