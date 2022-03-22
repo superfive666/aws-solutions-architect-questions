@@ -332,5 +332,190 @@ AWS ElastiCache is a web service that makes it easy to set up, manage, and scale
 
 ### Question 27 
 
+A company needs to store images that are uploaded by users via a mobile application. There is also a need to ensure that security measures are in place to avoid data loss.
 
+What step should be taken for protection against unintended user actions?
+
+- A: Store data in an EBS volume and create snapshots once a week.
+- B: Store data in an S3 bucket and enable versioning.
+- C: Store data on Amazon EFS storage.
+- D: Store data on EC2 instance storage.
+
+#### *Answer: B*
+
+Amazon S3 has an option for versioning, as shown below. Versioning is on the bucket level and can be used to recover prior versions of an object.
+
+### Question 28 
+
+An application needs to have a relational Datastore hosted in AWS. The following requirements are in place for the Datastore:
+
+a) The initial storage capacity of 8 table
+
+b) The ability to accommodate a database growth of 8GB per day 
+
+c) The ability to have 4 Read Replicas
+
+Which of the following Datastore is the best for this requirement?
+
+- A: DynamoDB
+- B: Amazon S3 
+- C: Amazon Aurora
+- D: ElasticCache
+
+#### *Answer: C*
+
+Aurora can have a storage limit of 64TB and can easily accommodate the initial 8TB plus a database growth of 8GB/day for nearly a period of 20+ years. It can have up to 15 Aurora Replicas that can be distributed across the Availability Zones that a DB cluster spans within an AWS Region.
+
+Aurora Replicas work well for read scaling because they are fully dedicated to read operations on the cluster volume. Write operations are managed by the primary instance. Because the cluster volume is shared among all DB instances in your DB cluster, no additional work is required to replicate a copy of each Aurora Replica data. [AWS Aurora Replication](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.Replication.html)
+
+### Question 29 
+
+There is a requirement to host a database on an EC2 Instance. It is also required that the EBS volume should support 32,000 IOPS.
+
+Which Amazon EBS volume type would meet the performance requirements of this database?
+
+- A: EBS Provisioned IOPS SSD
+- B: EBS Throughput Optimized HDD
+- C: EBS General Purpose SSD
+- D: EBS Cold HDD
+
+#### *Answer: C*
+
+For high performance and high IOPS requirements, as in this case, the ideal choice would be to choose EBS Provisioned IOPS SSD.
+Even though general purpose IO2 Block Express meets the requirement of 32,000 IOPS, but key word is to run database service on EC2, Provisioned IOPS SSD is more desirable. 
+
+### Question 30 
+
+In your organization, development teams use S3 buckets to store log files for various applications hosted in AWS development environments. The developers intend to keep the logs for a month for troubleshooting purposes and subsequently purge the logs.
+
+Which feature should be used to enable this requirement?
+
+- A: Adding a bucket policy on the S3 bucket.
+- B: Configuring lifecycle configuration rules on the S3 bucket.
+- C: Creating an IAM policy for the S3 bucket.
+- D: Enabling CORS on the S3 bucket.
+
+#### *Answer: B*
+
+### Question 31 
+
+You are creating a new architecture for a financial firm. The architecture consists of some EC2 instances of different types and sizes. The management team has asked you to create this architecture by ensuring the reduction of the risk of simultaneous failures. Which placement group option could you suggest for the instances?
+
+- A: Clustered Placement group
+- B: Partition Placement Group 
+- C: Multi-AZ Placement group
+- D: Spread Placement Group 
+
+#### *Answer: D*
+
+**Option A is incorrect.** In Clustered Placement Groups, all the instances are placed in the same rack in the same availability zone. Therefore, they are very susceptible to hardware failures and simultaneous failures. Also, it is suggested to have the same size and types of instances in this Placement Group. More details-[AWS EC2 placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html)
+
+**Option B is incorrect.** In partition placement groups, the chances of hardware failures and simultaneous failure are reduced compared to the Clustered placement group. Still, the Spread Placement group has fewer chances of this kind of failure. It is also suggested to have the same size and types of instances in this Placement Group.
+
+**Option C is incorrect.** There is no Multi-AZ placement group.
+
+**Option D is correct.** Spread Placement Groups place the instances in different racks. Every rack has its own hardware and power source. So, there is a minimum chance of simultaneous failure.
+
+### Question 32 
+
+You are creating a new architecture for a financial firm. The architecture consists of some EC2 instances with the same type and size (M5.large). In this architecture, all the EC2 mostly communicate with each other. Business people have asked you to create this architecture keeping in mind low latency as a priority. Which placement group option could you suggest for the instances?
+
+- A: Partition Placement Group 
+- B: Clustered Placement Group 
+- C: Spread Placement Group 
+- D: Enhanced Networking Placement Group 
+
+#### *Answer: B*
+
+*Refer to previous question explanation*
+
+### Question 33 
+
+A company has a media processing application deployed in a local data center. Its file storage is built on a Microsoft Windows file server. The application and file server need to be migrated to AWS. You want to set up the file server in AWS quickly. The application code should continue working to access the file systems. Which method should you choose to create the file server?
+
+- A: Create a Windows File Server from Amazon WorkSpaces.
+- B: Configure a high performance Windows File System in Amazon EFS.
+- C: Create a Windows File Server in Amazon FSx.
+- D: Configure a secure enterprise storage through Amazon WorkDocs.
+
+#### *Answer: C*
+
+In this question, a Windows file server is required in AWS, and the application should continue to work unchanged. Amazon FSx for Windows File Server is the correct answer as it is backed by a fully native Windows file system. [AWS Windows Guide](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/what-is.html)
+
+**Option A is incorrect.** Because Amazon WorkSpace configures a desktop server which is not required in this question. Only a Windows file server is needed.
+
+**Option B is incorrect.** Because EFS cannot be used to configure a Windows file server.
+
+**Option D is incorrect.** Because Amazon WorkDocs is a file sharing service in AWS. It cannot provide a native Windows file system.
+
+### Question 34 
+
+There is a requirement to get the source IP addresses that access resources in a private subnet. Which of the following cost-optimized service could be used to fulfill this purpose?
+
+- A: Trusted Advisor
+- B: VPC FLow Logs 
+- C: Use CloudWatch metrics
+- D: Use CloudTrail
+
+#### *Answer: B*
+
+VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. Flow log data is stored using Amazon CloudWatch Logs. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. [AWS VPN Flow Logs](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/flow-logs.html)
+
+**Option A is incorrect.** Because AWS Trusted Advisor is your customized cloud expert! It helps you observe the best practices for using AWS by inspecting your AWS environment to save money, improve system reliability and performance, and close security gaps.
+
+**Option C is incorrect.** Because CloudWatch metric is mainly used for performance metrics and cannot provide the source IP address.
+
+**Option D is incorrect.** Because AWS CloudTrail is a service that enables governance, compliance and operational auditing, and risk auditing of your account. With CloudTrail, you can log, continuously monitor and retain account activity related to actions across your AWS infrastructure. However it is costly to use CloudTrail. [AWS CloudTrail Endpoint Support](https://aws.amazon.com/about-aws/whats-new/2018/08/aws-cloudtrail-adds-vpc-endpoint-support-to-aws-privatelink/#:~:text=This%20enables%20you%20to%20connect,VPC%20through%20the%20Amazon%20network.&text=By%20using%20AWS%20CloudTrail%20with,your%20compliance%20and%20regulatory%20requirements)
+
+### Question 35 
+
+You are part of the IT team of a small car manufacturer company. The company is starting to move its On-Premise resources to the cloud. The Marketing department was the first department to migrate its applications to the cloud. Now the finance team wants to do the same. Each department should have its own AWS account but you need one management account to pay for the bills of all the AWS accounts. What do you suggest to solve this?
+
+- A: Create a different VPC for the Finance Department and limit their access to resources with IAM Roles and Policies.
+- B: Use AWS Control Tower
+- C: Use AWS Organizations to manage both AWS accounts.
+- D: Use AWS Cost Explorer to divide the bills and use IAM policies to limit the access to resources.
+
+#### *Answer: C*
+
+With AWS Organizations, you can have separate bills for every account and pay it with the same account using consolidating billing. More details: https://aws.amazon.com/organizations/faqs/.
+
+### Question 36 
+
+Your team is developing a high-performance computing (HPC) application. The application resolves complex, compute-intensive problems and needs a high-performance and low-latency Lustre file system. You need to configure this file system in AWS at a low cost. Which method is the most suitable?
+
+- A: Create a Lustre file system through Amazon FSx.
+- B: Launch a high performance Lustre file system in Amazon EBS.
+- C: Create a high-speed volume cluster in EC2 placement group.
+- D: Launch the Lustre file system from AWS Marketplace.
+
+#### *Answer: A*
+
+The Lustre file system is an open-source, parallel file system that can be used for HPC applications. Refer to [Lustre](http://lustre.org/)  for its introduction. In Amazon FSx, users can quickly launch a Lustre file system at a low cost.
+
+**Option B is incorrect.** Although users may be able to configure a Lustre file system through EBS, it needs lots of extra configurations. Option A is more straightforward.
+
+### Question 37 
+
+A Redshift cluster currently contains 60TB of data. There is a requirement that a disaster recovery site is put in place in another region. Which solution would help ensure that this requirement is fulfilled?
+
+- A: Take a copy of the underlying EBS volumes to S3, and then do Cross-Region Replication.
+- B: Enable Cross-Region snapshots for the Redshift Cluster.
+- C: Create a CloudFormation template to restore the Cluster in another region.
+- D: Enable Cross Availability Zone snapshots for the Redshift Cluster.
+
+#### *Answer: B*
+
+You can configure cross-regional snapshots when you want Amazon Redshift to automatically copy snapshots (automated or manual) to another region for backup purpose. Note that copying snapshots from source region to a destination region incurs data transfer charges. [AWS Redshift Cross Regional Snapshot](https://docs.aws.amazon.com/redshift/latest/mgmt/managing-snapshots-console.html)
+
+### Question 38
+
+A company is using a Redshift cluster to store its data warehouse. There is a requirement from the Internal IT Security team to encrypt data in the Redshift database. How could this be achieved? (SELECT TWO)
+
+- A: Encrypt the EBS volumes of the underlying EC2 Instances.
+- B: Use AWS KMS Customer Default master key.
+- C: Use SSL/TLS for encrypting the data.
+- D: Use hardware security module (HSM) to manage the top-level encryption keys.
+
+#### *Answer: *
 
