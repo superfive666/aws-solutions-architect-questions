@@ -869,4 +869,107 @@ You need to launch several EC2 instances to run Cassandra. There are large distr
 - C: Partition placement strategy.
 - D: Network placement strategy.
 
-#### *Answer: *
+#### *Answer: C*
+
+Placement groups have the placement strategies of Cluster, Partition and Spread. With the Partition placement strategy, instances in one partition do not share the underlying hardware with other partitions. This strategy is suitable for distributed and replicated workloads such as Cassandra. For details, please refer to [AWS EC2 placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-limitations-partition)
+
+### Question 60 
+
+A company has an infrastructure that consists of machines that send log information every 5 minutes. The number of these machines can run into thousands. It is required to ensure that the analysis of every log item is completed within 24 hours. What could help to fulfill this requirement?
+
+- A: Use Kinesis Data Streams to collect the logs and persist the data to S3 using Kinesis Firehose and Lambda.
+- B: Launch an Elastic Beanstalk application to take the processing job of the logs.
+- C: Launch an EC2 instance with enough EBS volumes to consume the logs which can be used for further processing.
+- D: Use CloudTrail to store all the logs which can be analyzed at a later stage.
+
+#### *Answer: A*
+
+Amazon Kinesis Data Streams (KDS) is a massively scalable and durable real-time data streaming service. KDS can continuously capture gigabytes of data per second from thousands of sources such as website clickstreams, database event streams, financial transactions, social media feeds, IT logs, and location-tracking events. [AWS Kinesis Data Streams](https://aws.amazon.com/kinesis/data-streams/)
+
+### Question 61 
+
+An application hosted in AWS allows external users to upload videos to an S3 bucket. The external users are required to be given access to upload a video for a week based on their respective profiles. How could this be accomplished in the best way possible?
+
+- A: Create an IAM bucket policy to provide access for one week.
+- B: Create a pre-signed URL for each profile which will last for one week.
+- C: Create an S3 bucket policy to provide access for one week.
+- D: Create an IAM role to provide access for one week.
+
+#### *Answer: B*
+
+Pre-Signed URLs are the perfect solution when you want to give temporary access to users for S3 buckets. So, whenever a new profile is created, you can create a pre-signed URL to ensure that the URL lasts for a week and allows users to upload the required objects. An S3 Pre-Signed URL only gives access to a single object. You can upload multiple videos but they will be to the same object key so they will overwrite each other. If the question indicates that the use case involves uploading multiple videos, the correct answer would be to use a Cloudfront Signed Cookie or Cognito to manage access. [AWS S3 Pre-signed URL](https://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html)
+
+### Question 62 
+
+You are creating several EC2 instances for a new application. The instances need to communicate with each other. For a better performance of the application, both low network latency and high network throughput are required for the EC2 instances. All instances should be launched in a single availability zone. How would you configure this?
+
+- A: Launch all EC2 instances in a placement group using a Cluster placement strategy.
+- B: Auto assign a public IP when launching the EC2 instances.
+- C: Launch EC2 instances in an EC2 placement group and select the Spread placement strategy.
+- D: When launching the EC2 instances, select an instance type that supports enhanced networking.
+
+#### *Answer: A*
+
+The Cluster placement strategy helps to achieve a low-latency and high throughput network. The reference is in [AWS EC2 placement groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-limitations-partition)
+
+### Question 63
+
+To improve the network performance, you launch a C5 EC2 Amazon Linux instance and enable Enhanced Networking by modifying the instance attribute with “aws ec2 modify-instance-attribute --instance-id instance_id --ena-support”. Which mechanism does the EC2 instance use to enhance the networking capabilities?
+
+- A: Intel 82599 Virtual Function (VF) interface.
+- B: Transit Virtual interface
+- C: Elastic Network Adapter (ENA).
+- D: Elastic Network Interface (ENI).
+
+#### *Answer: C*
+
+Enhanced networking has two mechanisms: Elastic Network Adapter (ENA) and Intel 82599 Virtual Function (VF) interface. For ENA, users can enable it with --ena-support. An EFA is an Elastic Network Adapter (ENA) with added capabilities. It provides all of the functionality of an ENA, with additional OS-bypass functionality. OS-bypass is an access model that allows HPC and machine learning applications to communicate directly with the network interface hardware to provide low-latency, reliable transport functionality."
+
+**Option A is incorrect:** Because the option of “--ena-support” is not used by Intel 82599 Virtual Function (VF) interface.
+
+**Option B is incorrect:** Because a Transit Virtual Interface is used to connect resources hosted in an Amazon VPC (using their private IP addresses) through a transit gateway, not suitable for the above scenario.
+
+**Option D is incorrect:** In this scenario, the mechanism used for enhanced networking should be Elastic Network Adapter (ENA) instead of Elastic Network Interface (ENI).
+
+[AWS enhanced network ENA](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enhanced-networking-ena.html)
+
+
+### Question 64 
+
+A company hosts 5 web servers in AWS. They want to ensure that multiple values for a DNS query should be returned and traffic routed to multiple IP addresses. In addition, you want to associate your routing records with a Route 53 health check. Which routing policy should be used to fulfill this requirement?
+
+- A: Simple
+- B: Weighted
+- C: Multivalue Answer 
+- D: Latency
+
+#### *Answer: C*
+
+If you want to route traffic randomly to multiple resources such as web servers, you can create one multivalue answer record for each resource and, optionally, associate an Amazon Route 53 health check with each record. For example, suppose you manage an HTTP web service with a dozen web servers where each has its own IP address. No web server could handle all the traffic. But if you create a dozen multivalue answer records, Amazon Route 53 responds to DNS queries with up to eight healthy records in response to each DNS query. Amazon Route53 gives different answers to different DNS resolvers. If a web server becomes unavailable after a resolver cache a response, client software can try another IP address in the response.
+
+**Simple Routing Policy** – Use a single resource that performs a given function for your domain, such as a web server that serves the example.com website.
+
+**Latency Routing Policy** – Use when you have resources in multiple locations, and you want to route traffic to the resource that provides the best latency.
+
+**Weighted Routing Policy** – Use to route traffic to multiple resources in proportions that you specify.
+
+**Multivalue Answer Routing Policy** – Use to route traffic to multiple resources in proportions that you specify.
+
+[Multivalue vs Simple Routing Policy](https://aws.amazon.com/premiumsupport/knowledge-center/multivalue-versus-simple-policies)
+
+### Question 65 
+
+You are working as AWS Solutions Architect for a large banking organization. The requirement is that under normal business hours, there would always be at least 24 web servers up and running in a region (example: US - West (Oregon)). It will be a three-tier architecture connecting to the databases. The solution offered should be highly available, secure, and cost-effective. It should respond to the heavy requests during peak hours and fault-tolerate up to one AZ failure.
+
+What would be the best solution to meet this requirement?
+
+- A: In a given region, use ELB behind two different AZs, each AZ with minimum or desired 24 web servers hosted in a public subnet and Multi-AZ database architecture in a private subnet.
+- B: In a given region, use ELB behind three different AZs, each AZ having ASG, with minimum or desired 12 web servers hosted in a public subnet and Multi-AZ database architecture in a private subnet.
+- C: In a given region, use ELB behind two different AZs, each AZ having ASG, with minimum or desired 12 web servers hosted in a public subnet and Multi-AZ database architecture in a private subnet.
+- D: In a given region, use ELB behind three different AZs, each AZ having ASG, with minimum or desired 8 web servers hosted in public subnet and Multi-AZ database architecture in a different public subnet.
+
+#### *Answer: B*
+
+If there is up to one availability zone failure, the remaining AZ should be supporting at least 24 web servers. Therefore options C and D are out. 
+
+In addition, Option A requires 2 x 24 = 48 web server instances running whereas Option B requires 3 x 12 = 36 web server instances running. Option B is more cost effective than Option A.
