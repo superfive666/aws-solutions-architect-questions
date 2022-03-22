@@ -517,5 +517,194 @@ A company is using a Redshift cluster to store its data warehouse. There is a re
 - C: Use SSL/TLS for encrypting the data.
 - D: Use hardware security module (HSM) to manage the top-level encryption keys.
 
-#### *Answer: *
+#### *Answer: B & D*
 
+Amazon Redshift uses a hierarchy of encryption keys to encrypt the database. You can use either AWS Key Management Service (AWS KMS) or a hardware security module (HSM) to manage the top-level encryption keys in this hierarchy. The process that Amazon Redshift uses for encryption differs depending on how you manage keys.
+
+[AWS Encrypt Redshift using KMS](https://aws.amazon.com/blogs/big-data/encrypt-your-amazon-redshift-loads-with-amazon-s3-and-aws-kms/)
+[AWS Redshift working with DB encryption](https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-db-encryption.html)
+
+### Question 39
+
+An EC2 instance in the private subnet needs access to the S3 bucket placed in the same region as that of the EC2 instance. The EC2 instance needs to upload and download bigger files to the S3 bucket frequently.
+
+As an AWS Solutions Architect, what quick and cost-effective solution would you suggest to your customers? You need to consider that the EC2 instances are present in the private subnet, and the customers do not want their data to be exposed over the internet.
+
+- A: Place the S3 bucket in another public subnet of the same region and create a VPC peering connection to this private subnet where the EC2 instance is placed. The traffic to upload and download files will go through secure Amazon's private network.
+- B: Create an IAM role having access over the S3 service and assign it to the EC2 instance.
+- C: Create a VPC endpoint for S3, use your route tables to control which instances can access resources in Amazon S3 via the endpoint. The traffic to upload and download files will go through the Amazon private network.
+- D: A private subnet can always access S3 bucket/ service through the NAT Gateways or NAT instances, so there is no need for additional setup.
+
+#### *Answer: C*
+
+**Option A is incorrect** because the S3 service is region-specific, not AZ’s specific, and the statement talks about placing the S3 bucket in Public Subnet.
+
+**Option B is incorrect** because the VPC endpoint has a policy that controls the use of the endpoint to access Amazon S3 resources. The default policy allows access by any user or service within the VPC, using credentials from any AWS account to any Amazon S3 resource.
+
+**Option C is correct.** It can help to access the S3 services in the same region for the EC2 instance. You can create a VPC endpoint and update the route entry of the route table associated with the private subnet. This is a quick solution as well as cost-effective as it will use Amazon's own private network. Hence, it won’t expose the data over the internet.
+
+**Option D is incorrect** as this is certainly not a default setup unless we create a NAT Gateway or Instance. Even if they are there, it’s an expensive solution and exposes the data over the internet.
+
+### Question 40 
+
+You are developing an application using AWS SDK to get objects from AWS S3. The objects have big sizes. Sometimes there are failures when getting objects, especially when the network connectivity is poor. You want to get a specific range of bytes in a single GET request and retrieve the whole object in parts. Which method can achieve this?
+
+- A: Enable multipart upload in the AWS SDK.
+- B: Use the “Range” HTTP header in a GET request to download the specified range bytes of an object.
+- C: Reduce the retry requests and enlarge the retry timeouts through AWS SDK when fetching S3 objects.
+- D: Retrieve the whole S3 object through a single GET operation.
+
+#### *Answer: B*
+
+Through the “Range” header in the HTTP GET request, a specified portion of the objects can be downloaded instead of the whole objects. Check the explanations in [AWS Getting Object using APIs](https://docs.aws.amazon.com/AmazonS3/latest/dev/GettingObjectsUsingAPIs.html).
+
+### Question 41 
+
+An application needs to access resources from another AWS account of another VPC in the same region. Which of the following ensure that the resources can be accessed as required?
+
+- A: Establish a NAT instance between both accounts.
+- B: Use a VPN between both accounts.
+- C: Use a NAT Gateway between both accounts.
+- D: Use VPC Peering between both accounts.
+
+#### *Answer: D*
+
+A VPC peering connection is a networking connection between two VPCs that enables you to route traffic between them privately. Instances in either VPC can communicate with each other as if they are within the same network. You can create a VPC Peering connection between your own VPCs, with a VPC in another AWS account, or with a VPC in a different AWS Region.
+
+### Question 42 
+
+You host a static website in an S3 bucket, and there are global clients from multiple regions. You want to use an AWS service to store cache for frequently accessed content so that the latency is reduced and the data transfer rate increases. Which of the following options would you choose?
+
+- A: Use AWS SDKs to horizontally scale parallel requests to the Amazon S3 service endpoints.
+- B: Create multiple Amazon S3 buckets and put Amazon EC2 and S3 in the same AWS Region.
+- C: Enable Cross-Region Replication to several AWS Regions to serve customers from different locations.
+- D: Configure CloudFront to deliver the content in the S3 bucket.
+
+#### *Answer: D*
+
+CloudFront can store the frequently accessed content as a cache, and the performance is optimized. Other options may help with the performance. However, they do not store cache for the S3 objects.
+
+### Question 43 
+
+An application consists of the following VPC architecture:
+
+a. EC2 Instances in multiple AZ’s behind an ELB
+
+b. EC2 Instances are launched via an Auto Scaling Group.
+
+c. There is one NAT Gateway for all AZ's instances to download the updates from the Internet.
+
+What is a bottleneck in the architecture based on the availability?
+
+- A: The EC2 instances
+- B: The ELB
+- C: The NAT Gateway 
+- D: The Auto Scaling Group 
+
+#### *Answer: C*
+
+Since there is only one NAT Gateway, this is a bottleneck in the architecture. For high availability, launch NAT Gateways in multiple Available Zones.
+
+If you have resources in multiple Availability Zones and they share one NAT gateway, and if the NAT gateway’s Availability Zone is down, resources in the other Availability Zones lose internet access. To create an Availability Zone-independent architecture, create a NAT gateway in each Availability Zone and configure your routing to ensure that resources use the NAT gateway in the same Availability Zone. [VPC NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html#nat-gateway-basics)
+
+### Question 44 
+
+A company owns an API deployed in EC2 written using Python. All the requests can be finished within 1 second. Most of traffic happens during the daytime. The company wants to save the API cost and simplify the maintenance of the server without impacting the performance. How can this be achieved?
+
+- A: Use API Gateway with the backend services as it is.
+- B: Use the API Gateway along with AWS Lambda.
+- C: Use CloudFront along with the API backend service as it is.
+- D: Use ElastiCache along with the API backend service as it is.
+
+#### *Answer: B*
+
+Since the company has full ownership of the API, the best solution would be to convert the code for the API and use it in a Lambda function. This can help save on cost since, in the case of Lambda, you only pay for the time the function runs and not for the infrastructure.
+
+Then, you can use the API Gateway along with the AWS Lambda function to scale accordingly. [Getting started with lambda implementation](https://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started-with-lambda-integration.html)
+
+Note: With Lambda, you do not have to provision your own instances. Lambda performs all the administrative activities on your behalf, including capacity provisioning, monitoring fleet health, applying security patches to the underlying compute resources, deploying your code, running a web service front end, and monitoring and logging your code. AWS Lambda provides easy scaling and high availability to your code without additional effort on your part.
+
+### Question 45 
+
+You have an application hosted in an Auto Scaling group, and an application load balancer distributes traffic to the ASG. You want to add a scaling policy that keeps the average aggregate CPU utilization of the Auto Scaling group to be 60 percent. The capacity of the Auto Scaling group should increase or decrease based on this target value. Which scaling policy does it belong to?
+
+- A: Target tracking scaling policy 
+- B: Step scaling policy
+- C: Simple scaling policy 
+- D: Scheduled scaling policy 
+
+#### *Answer: A* 
+
+In ASG, you can add a target tracking scaling policy based on a target. For different scaling policies, please check [scale on demand](https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scale-based-on-demand.html)
+
+Step scaling adjusts the capacity based on step adjustments instead of a target.
+
+Simple scaling changes the capacity based on a single adjustment.
+
+With Scheduled scaling, the capacity is adjusted based on a schedule rather than a target.
+
+### Question 46 
+
+An application sends images to S3. The metadata for these images needs to be saved in persistent storage and is required to be indexed. Which one of the following is the best for the underlying metadata storage?
+
+- A: Amazon Aurora
+- B: Amazon S3 
+- C: Amazon DynamoDB
+- D: Amazon RDS
+
+#### *Answer: C*
+
+The most efficient storage mechanism for just storing metadata is Amazon DynamoDB. Amazon DynamoDB is normally used in conjunction with the Simple Storage service. So, after storing the images in S3, you can store their metadata in DynamoDB. You can also create secondary indexes for DynamoDB Tables. [DynamoDB Indexing](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.Indexes.html)
+
+### Question 47 
+
+An application hosted on EC2 Instances has its promotional campaign due to start in 2 weeks. The performance team performs some analysis based on the historical data and informs you the number of instances that are required for the campaign. You need to make sure that the Auto Scaling group is properly configured with the provided number of instances. What should be done to fulfill this requirement?
+
+- A: Migrate the application from the Auto Scaling group to a Lambda function so that the application scales automatically by AWS.
+- B: Configure Scheduled scaling in the Auto Scaling Group.
+- C: Configure a Lambda function that scales up the ASG when the activity starts and scales down when the activity ends.
+- D: Configure Static scaling for the Auto Scaling Group.
+
+#### *Answer: B*
+
+In the question, the promotional campaign will start in 2 weeks. As you already know how many instances are required, you can configure a scaling schedule in the Auto Scaling group to plan the scaling actions.
+
+### Question 48 
+
+Currently, a company uses EBS snapshots to back up their EBS Volumes. As a part of the business continuity requirement, these snapshots need to be made available in another region. How could this be achieved?
+
+- A: Directly create the snapshot in another region.
+- B: Create a snapshot and copy it to another region.
+- C: Copy the snapshot to an S3 bucket and then enable Cross-Region Replication for the bucket.
+- D: Copy the EBS Snapshot to an EC2 instance in another region.
+
+#### *Answer: B*
+
+This scenario is not about automation (although it can indeed be automated) but extending resiliency through a backup strategy. There is no access to the bucket where snapshots are automatically backed upon and that is why cross-region replication is not an option in this context.
+
+With Amazon EBS, you can create point-in-time snapshots of volumes, which we store for you in Amazon S3. After you create a snapshot and it has finished copying to Amazon S3 (when the snapshot status is
+```
+completed
+```
+), you can copy it from one AWS Region to another, or within the same Region. [EBS copy snapshots](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html)
+
+**Option C is not correct.** because we can't directly use Cross-Region replcation, it requires a replication for the source bucket
+
+### Question 49
+
+A company has an application hosted in AWS. This application consists of EC2 Instances that sit behind an ELB. The following are the requirements from an administrative perspective:
+
+a) Ensure that notifications are sent when the read requests go beyond 1000 requests per minute.
+
+b) Ensure that notifications are sent when the latency goes beyond 10 seconds.
+
+c)  Monitor all AWS API request activities on the AWS resources.
+
+Which of the following can be used to satisfy these requirements? (SELECT TWO)
+
+- A: Use CloudTrail to monitor the API Activity.
+- B: Use CloudWatch Logs to monitor the API Activity.
+- C: Use CloudWatch Metrics for the metrics that need to be monitored as per the requirement and set up an alarm activity to send out notifications when the metric reaches the set threshold limit.
+- D: Use custom log software to monitor the latency and read requests to the ELB.
+
+#### *Answer *
