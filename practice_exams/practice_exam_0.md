@@ -640,7 +640,7 @@ The corresponding configuration of `AWSLambdaBasicExecutionRole` is as follow:
 }
 ```
 
-### Question 30 
+### Question 30
 
 Your company has setup EC2 Instances in a VPC for their application. The IT Security department has advised that all traffic be monitored to the EC2 Instances. Which of the following features can be used to capture information for outgoing and incoming IP traffic from network interfaces in a VPC.
 
@@ -659,5 +659,213 @@ Option B is incorrect since this is a compute service
 
 Option C is incorrect since this is a messaging service
 
-### Question 31 
+### Question 31
+
+A media firm uses the Amazon S3 bucket to save all videos shared by reporters across the globe. Operation Team has instructed all reporters to use only Multipart Uploads while uploading these large-sized videos to Amazon S3 bucket in each region. Most of the reporters are working from remote areas & face challenges in uploading videos. The Finance Team is concerned about high costs incurred by saving data in the Amazon S3 bucket & seeking your guidance. Post verification, you observe a large number of incomplete uploads in Amazon S3 buckets in each region. The uncompleted uploads can be deleted after a certain period of time.
+
+Which of the following actions can minimize charges for saving video files in the Amazon S3 bucket?
+
+- A: Reporter's need to compress video files locally before uploading to Amazon S3 bucket.
+- B: Reporters need to upload Videos to Amazon S3 Glacier to save additional charges.
+- C: Create a Lifecycle Policy to move all incomplete Multipart uploads to Amazon S3 Glacier after weeks time from initiation.
+- D: Create a Lifecycle Policy to delete all incomplete Multipart uploads after weeks time from initiation.
+
+#### _Answer: D_
+
+Incomplete Multipart Uploads incur storage charges on the Amazon S3 bucket. Lifecycle rules can be used to abort the uploading of multipart uploads that are incomplete since a specific time frame & also deletes these parts to free up storage, reducing costs for this storage.
+
+Option A & B are incorrect as Incomplete Multipart Uploads incur charges. These charges can be stopped by stopping multipart uploads.
+
+Option C is incorrect as Moving all incomplete Multipart uploads to Amazon S3 Glacier would not completely reduce the cost for storing data. As data in Amazon S3 Glacier would incur cost, it would be less than data storing the Amazon S3 bucket. Also, incomplete Multipart uploads would not be used until fully uploaded.
+
+### Question 32
+
+Your team has deployed an application that consists of a web and database tier hosted on separate EC2 Instances. Both EC2 Instances are using General Purpose SSD for their underlying volume type. Of late, there are performance issues related to the read and writes of the database EC2 Instance. Which of the following could be used to alleviate the issue?
+
+- A: Change the Instance type to a higher Instance Type.
+- B: Change the EBS volume to Provisioned IOPS SSD.
+- C: Enable Enhanced Networking on the Instance.
+- D: Enable Multi-AZ for the database.
+
+#### _Answer: B_
+
+The Provisioned IOPS SSD EBS volume type is perfect for these types of workloads. The below excerpt from the documentation shows the key differences between the different volume types.
+
+Option A is incorrect since the primary issue is that the volume type is not correct.
+
+Option C is incorrect since networking is not an issue here.
+
+Option D is incorrect since this option is applicable for the AWS RDS service.
+
+### Question 33
+
+Your company is planning to make use of the Elastic Container service for managing their container-based applications. They are going to process both critical and non-critical workloads with these applications. Which of the following COST effective setup would they consider?
+
+- A: Use ECS orchestration and Spot Instances for processing critical data and On-Demand for the non-critical data.
+- B: Use ECS orchestration and On-Demand Instances for processing critical data and Spot Instances for the non-critical data.
+- C: Use ECS orchestration and Spot Instances for both the processing of critical data and non-critical data.
+- D: Use ECS orchestration and On-Demand Instances for both the processing of critical data and non-critical data.
+
+#### _Answer: B_
+
+Spot Instance and On-demand Instance are very similar in nature. The main difference between these is a commitment. In Spot Instance, there is no commitment. As soon as the Bid price exceeds the Spot price, a user gets the Instance. In an On-demand Instance, a user has to pay the On-demand rate specified by Amazon. Once they have bought the Instance, they have to use it by paying that rate.
+
+In Spot Instance, once the Spot price exceeds the Bid price, Amazon will shut the instance. The benefit to the user is that they will not be charged for the partial hour in which the Instance was taken back from them.
+
+Spot instances are not always cheaper than on-demand, they can and do sometimes fluctuate wildly, even to very high per hour amounts, higher than th on-demand price at times.
+
+A Spot Instance is an unused EC2 instance that is available for less than the On-Demand price. Because Spot Instances enable you to request unused EC2 instances at steep discounts, you can significantly lower your Amazon EC2 costs. The hourly price for a Spot Instance is called a Spot price. The Spot price of each instance type in each Availability Zone is set by Amazon EC2 and adjusted gradually based on the long-term supply of and demand for Spot Instances. Your Spot Instance runs whenever capacity is available, and the maximum price per hour for your request exceeds the Spot price.
+
+Options A and C are incorrect since Spot Instances can be taken back or interrupted and should not be used for critical workloads.
+
+Option D is not a cost-effective solution. You can use Spot Instances for non-critical workloads.e
+
+### Question 34
+
+A company has its major applications deployed in AWS. The company is building a new office and requires a high-performance network connection between the local office network and the AWS network. The connection needs to have high bandwidth throughput and allow users in the office to connect with multiple AWS VPCs of multiple AWS Regions. How would you establish the connection in the most appropriate way?
+
+- A: For each AWS Region, create an AWS Direct Connect by configuring a public VIF between the VPC Virtual Private Gateway and the Customer Router.
+- B: Create a Direct Connect Gateway to connect the local network with multiple Amazon VPCs across different regions.
+- C: Configure two Direct Connects with two private VIFs to provide highly-available ad dedicated private connections.
+- D: Create an AWS Direct Connect dedicated network connection on top of Amazon VPN to establish an end-to-end secure IPSec connection.n
+
+#### _Answer: B_
+
+Option A is incorrect because in this option users need to configure an AWS Direct Connect for each AWS Region, which is not the most appropriate method. Besides, private VIF should be set up in Direct Connection instead of public VIF. Private virtual interface is used to access Amazon VPC using private IP addresses and public virtual interface is used to access AWS public services. In this scenario, the connections need to be secured, so private VIF should be used.
+
+Option B is CORRECT because Direct Connect Gateway, as a globally available resource, can be used to establish high-performance network connections to different AWS Regions and reduce management loads.
+
+Option C is incorrect because this option is suitable for scenarios in which highly available and redundant connections are needed. There is no such requirement in the question.
+
+Option D is incorrect because the question does not require a secure IPSec connection therefore VPN is not needed. This option also does not address the requirements to connect with different AWS Regions.
+
+### Question 35
+
+Your company owns several EC2 Windows servers in production. In order to be compliant with recent company security policies, you need to create an EC2 Windows bastion host for users to connect to the instances via the Remote Desktop Protocol (RDP). How would you ensure that users can perform remote administration for the Windows servers ONLY through the new bastion host?
+
+- A: Configure the security groups of the Windows server instances to only accept TCP/3389 connections from the security group of the Windows bastion host.
+- B: Configure the security group of the Windows bastion host to only allow RDP from the company’s IP addresses.
+- C: Add a NACL rule in the subnets of the Windows server instances to deny TCP/443 and TCP/22.
+- D: In the NACL of the bastion host server, allow the inbound and outbound traffic for TCP/3389.
+
+#### _Answer: A_
+
+Option A is CORRECT because with this option, Windows server instances only allow the RDP traffic from the bastion host instance. Users need to login to the bastion host to connect to the Windows servers.
+
+Option B is incorrect because this option only allows the connections to the bastion host. It does not provide the RDP connections to the Windows servers through the bastion host.
+
+Option C is incorrect because this option only denies ports 443 and 22. It does not allow any rules for the inbound RDP connections.
+
+Option D is incorrect because similar to option B, it only controls the RDP traffic of the bastion host and there are no controls or limitations on the Windows instances. Users can bypass the bastion host to connect to the Windows servers via RDP and there is no NACL rule to deny it.
+The NACL of the bastion host server cannot block the unexpected connections. Instead, the control should be applied in the Windows instances to only allow the connections from the Windows bastion host.
+
+### Question 36
+
+Your team uses Amazon ECS to manage containers for several micro-services. To save cost, multiple ECS tasks should run at a single container instance. When a task is launched, the host port should be dynamically chosen from the container instance's ephemeral port range. The ECS service should select a load balancer that supports dynamic mapping. Which types of load balancers are appropriate?
+
+- A: Application Load Balancer or Network Load Balancer.
+- B: Application Load Balancer only.
+- C: Network Load Balancer only.
+- D: Application Load Balancer or Classic Load Balancer.
+
+#### _Answer: A_
+
+Option A is CORRECT because both Application Load Balancer and Network Load Balancer support dynamic mapping. You can configure the ECS service to use the load balancer, and a dynamic port will be selected for each ECS task automatically. With Dynamic mapping, multiple copies of a task can run on the same instance.
+
+Option B and C are incorrect: Please check the below references.
+
+Option D is incorrect because Classic Load Balancer does not support dynamic mapping. With Classic Load Balancer, you have to define the port mappings on a container instance statically.
+
+[AWS Load Balancer Types](https://docs.aws.amazon.com/AmazonECS/latest/userguide/load-balancer-types.html)
+[ECS Dynamic Port Mapping](https://aws.amazon.com/premiumsupport/knowledge-center/dynamic-port-mapping-ecs/)
+
+### Question 37
+
+A large amount of structured data is stored in Amazon S3 using the JSON format. You need to use a service to analyze the S3 data directly with standard SQL. In the meantime, the data should be easily visualized through data dashboards. Which of the following services is the most appropriate?
+
+- A: Amazon Athena and Amazon QuickSight.
+- B: AWS Glue and Amazon Athena.
+- C: AWS Glue and Amazon QuickSight.
+- D: Amazon Kinesis Data Stream and Amazon QuickSight.
+
+#### _Answer: A_
+
+Option A is CORRECT because Amazon Athena is the most suitable to run ad-hoc queries to analyze data in S3. Amazon Athena is serverless, and you are charged for the amount of scanned data. Besides, Athena can integrate with Amazon QuickSight that visualizes the data via dashboards.
+
+Option B is incorrect because AWS Glue is an ETL (extract, transform, and load) service that organizes, cleanses, validates, and formats data in a data warehouse. This service is not required in this scenario.
+
+Option C is incorrect because it is the same as Option B. AWS Glue is not required.
+
+Option D is incorrect because, with Amazon Kinesis Data Stream, users cannot perform queries for the S3 data through standard SQL.
+
+[AWS Athena](https://aws.amazon.com/athena/pricing/)
+[AWS Create a data set athena](https://docs.aws.amazon.com/quicksight/latest/user/create-a-data-set-athena.html)
+
+### Question 38
+
+You have an Amazon Route 53 alias record that routes the traffic to an Application Load Balancer. Later on, the availability zones enabled for the load balancer are changed by a team member. When you check the load balancer using the dig command, you find that the IPs of the ELB have changed. What kind of change do you need to do for the alias record in Route 53?
+
+- A: Change the record type from A to CNAME.
+- B: Modify the destination to the DNS name of the Application Load Balancer.
+- C: Add the new IP addresses in the destination of the alias record.
+- D: Nothing as Route 53 automatically recognizes changes in the resource for the alias record.
+
+#### _Answer: D_
+
+Option A is incorrect because there is no need to change the type to CNAME as the alias record continues to work, although the IP addresses are changed for the ELB.
+
+Option B is incorrect because Route 53 can find out the new IPs of the ELB. This change is not required.
+
+Option C is incorrect because you cannot add any extra IPs to this record after creating the alias record. Route 53 is responsible for routing the traffic to the correct IP addresses.
+
+Option D is CORRECT because Route 53 automatically routes the traffic to the new ELB IP addresses. With alias records, users do not need to change the record sets even if they have some configuration changes.
+
+### Question 39
+
+You have an S3 bucket that is used to store important data for a web application. You want to receive an email notification whenever an object removal event happens in the S3 bucket. How would you configure the S3 bucket to achieve this requirement?
+
+- A: Configure the object-level logging for the S3 bucket and register an SNS topic to provide notifications.
+- B: Configure the server access logging for the object removal events. Add an SNS topic to notify the team via emails.
+- C: Set up an AWS Config rule to check the object deletion events. Register a Lambda function to send notifications.
+- D: Configure an S3 event notification for the object removal events. Send the events to an SNS topic.
+
+#### _Answer: D_
+
+Option A is incorrect because object-level logging is used to record object-level API activities in CloudTrail. Users cannot register an SNS topic for object-level logging.
+
+Option B is incorrect because server access logging does not trigger an SNS topic for the object removal events.
+
+Option C is incorrect because you would need to write a custom Lambda function in the AWS Config rule to check the object removal events. This method is more complicated than option D.
+
+Option D is CORRECT because with an S3 event notification, you can select which events are enabled for the notification.
+
+[S3 enable event notification](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/enable-event-notifications.html)
+[S3 notification](https://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html)
+
+### Question 40 
+
+Your organization had asked to be cost-efficient in designing AWS solutions. You have created three VPCs(VPC A, VPC B, VPC C), peered VPC A to VPC B and VPC B to VPC C. You have created a NAT gateway in VPC B and would like to use the same NAT Gateway for resources within VPC A and VPC C. However, the resources within VPC A and VPC C cannot communicate to the internet through NAT Gateway, but resources in VPC B can communicate. What could be the reason?
+
+- A: Route tables in VPC A and VPC C are not configured to have VPC B’s NAT gateway.
+- B: Using another VPC's NAT Gateway is not supported in AWS.
+- C: VPC A has not peered with VPC C.
+- D: NAT Gateway is not created inside VPC B’s public subnet.
+
+#### _Answer: B_
+
+In a VPC peering connection, using the NAT Gateway of another VPC becomes transitive routing and is not supported in AWS.
+You can use a NAT gateway to connect to other VPCs or your on-premises network, but cannot make other VPC connect to the internet.
+
+You cannot route traffic to a NAT gateway through a VPC peering connection, a Site-to-Site VPN connection, or AWS Direct Connect. A NAT gateway cannot be used by resources on the other side of these connections. [NAT gateway basics](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html#nat- gateway-basics)
+
+For Option A, in VPC’s route table, only NAT Gateway of the belonging VPC can be configured. VPC A and VPC C cannot configure VPC B’s NAT Gateway in their respective route tables. This option is incorrect.
+
+For Option B, as explained above, transitive routing is not supported. This option is correct.
+
+For Option C, even if VPC A and C have peered and configured route tables with their entire IP range, using NAT Gateway of another VPC is not possible.
+
+For Option D, the question says VPC B resources can communicate with the internet, for which NAT gateway should be on a public subnet. So this option is not valid.
+
+### Question 41 
+
 
