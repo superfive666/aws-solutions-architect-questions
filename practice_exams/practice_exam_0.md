@@ -868,4 +868,105 @@ For Option D, the question says VPC B resources can communicate with the interne
 
 ### Question 41 
 
+As a Cloud Architect, you have deployed an existing application from the local server to an On-demand EC2 instance. You found out that there is an issue while connecting the application using the HTTPS Protocol. After troubleshooting the issue, you added port 443 to the security group of the instance. How much time will it take to update changes to all of the resources related to Security groups?
 
+- A: It can take up to 10 minutes depending on the number of resources.
+- B: You just need to restart the EC2 Server.
+- C: You cannot make any change to existing security group, you have to create new Security group. 
+- D: Immediately without restart.
+- E: You have to deploy your application again.
+
+#### _Answer: D_
+
+You can assign a security group to an instance when you launch the instance. When you add or remove rules, those changes are automatically applied to all instances to which you've assigned the security group.
+
+Option A is incorrect. Any changes made to the Security Group are immediately effected.
+
+Option B is incorrect because you don’t need to restart the server to check any Security Group updates.
+
+Option C is incorrect because you can modify rules in the security group.
+
+Option D is CORRECT because any changes made to the security group are taken into effect immediately.
+
+Option E is incorrect because this security group works at the instance level, not at the application level.
+
+### Question 42
+
+One of your colleagues, who is new to the company where you work as a cloud Architect, has some issues with IP Addresses. He has created an Amazon VPC with an IPV4 CIDR block 10.0.0.0/24, but now there is a requirement of hosting a few more resources to that VPC. As per his knowledge, he is thinking of creating a new VPC with a greater range. Could you suggest to him a better way that should be reliable?
+
+- A: Delete the existing subnets in the VPC and create new Subnets in VPC.
+- B: He is thinking of the right approach.
+- C: You can create new VPC and connect old VPC with a new one.
+- D: You can expand existing VPC by adding Secondary CIDR to your current VPC.
+
+#### _Answer: D_
+
+Options A, B, C are incorrect because it is not reliable to go for this type of approach as VPC to VPC connection will take new resources like VPC Peering. Creating a new VPC or Subnet is also not suggested.
+
+Option D is correct because you can associate Secondary CIDR to your current VPC to accommodate more hosts.
+
+[Working with VPCs](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#add-ipv4-cidr)
+
+### Question 43 
+
+You are a solutions architect working for a financial services firm. Your firm requires a very low latency response time for requests via API Gateway and Lambda integration to your securities master database. The securities master database, housed in Aurora, contains data about all of the securities your firm trades. The data consists of the security ticker, the trading exchange, trading partner firm for the security, etc. As this securities data is relatively static, you can improve the performance of your API Gateway REST endpoint by using API Gateway caching. Your REST API calls for equity security request types and fixed income security request types to be cached separately.
+Which of the following options is the most efficient way to separate your cache responses via request type using API Gateway caching?
+
+- A: Payload compression
+- B: Custom domain name
+- C: API Stage
+- D: Query string
+
+#### _Answer: D_
+
+Option A is incorrect. Payload compression is used to compress and decompress the payload to and from your API Gateway. It is not used to separate cache responses.
+
+Option B is incorrect. Custom domain names are used to provide more readable URLs for the users of your AIPs. They are not used to separate cache responses.
+
+Option C is incorrect. An API stage is used to create a name for your API deployments. They are used to deploy your API in an optimal way.
+
+Option D is correct. You can use your query string parameters as part of your cache key. This allows you to separate cache responses for equity requests from fixed income request responses.
+
+### Question 44 
+
+You are a solutions architect working for a data analytics company that delivers analytics data to politicians that need the data to manage their campaigns. Political campaigns use your company’s analytics data to decide on where to spend their campaign money to get the best results for the efforts. Your political campaign users access your analytics data through an Angular SPA via API Gateway REST endpoints. You need to manage the access and use of your analytics platform to ensure that the individual campaign data is separate. Specifically, you need to produce logs of all user requests and responses to those requests, including request payloads, response payloads, and error traces. Which type of AWS logging service should you use to achieve your goas?
+
+- A: Use CloudWatch access logging
+- B: Use CloudWatch execution logging
+- C: Use CloudTrail logging
+- D: Use CloudTrail execution loggingl
+
+#### _Answer: B_
+
+Option A is incorrect. CloudWatch access logging captures which resource accessed an API and the method used to access the API. It is not used for execution traces, such as capturing request and response payloads.
+
+Option B is correct. CloudWatch execution logging allows you to capture user request and response payloads as well as error traces.
+
+Option C is incorrect. CloudTrail captures actions by users, roles, and AWS services. CloudTrail records all AWS account activity. CloudTrail does not capture error traces.
+
+Option D is incorrect. CloudTrail does not have a feature called execution logging.
+
+### Question 45 
+
+You are a solutions architect working for a social media company that provides a place for civil discussion of political and news-related events. Due to the ever-changing regulatory requirements and restrictions placed on social media apps that provide these services, you need to build your app in an environment where you can change your implementation instantly without updating code. You have chosen to build the REST API endpoints used by your social media app user interface code using Lambda. How can you securely configure your Lambda functions without updating code? (Select TWO)
+
+- A: Pass environment variables to your Lambda function via the request header sent to your API Gateway methods.
+- B: Configure your Lambda functions to use key configuratio.
+- C: Use encryption helpers
+- D: Use Lambda layers
+- E: Use Lambda aliasesn
+
+#### _Answer: B & C_ 
+
+Option A is incorrect. Sending environment variables to your Lambda function as request parameters would expose the environment variables as plain text. This is not a secure approach.
+
+Option B is correct. Lambda key configuration allows you to have your Lambda functions use an encryption key. You create the key in AWS KMS. The key is used to encrypt the environment variables that you can use to change your function without deploying any code.
+
+Option C is correct. Encryption helpers make your lambda function more secure by allowing you to encrypt your environment variables before they are sent to Lambda.
+
+Option D is incorrect. Lambda layers are used to package common code such as libraries, configuration files, or custom runtime images. Layers will not give you the same flexibility as environment variables for use in managing change without deploying any code.
+
+Option E is incorrect. Lambda aliases are used to refer to a specific version of your Lambda function. You could switch between many versions of your Lambda function, but you would have to deploy new code to create a different version of your Lambda function.
+
+[Data protection in AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/security-dataprotection.html)
+[Lambda function aliases](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html)
