@@ -365,7 +365,7 @@ Option B is incorrect since this should be used when you want to route traffic t
 
 Option C is incorrect since this should be used when you want to improve your users' performance by serving their requests from the AWS Region that provides the lowest latency.
 
-For more information on a Routing policy, please refer to the below URL-[AWS Routing Policy](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html) 
+For more information on a Routing policy, please refer to the below URL-[AWS Routing Policy](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html)
 
 ### Question 19
 
@@ -382,7 +382,7 @@ The Cooldown period is a configurable setting for your Auto Scaling group, ensur
 
 For more information on Auto Scaling Cooldown, please visit the following URL- [Cooldown](https://docs.aws.amazon.com/autoscaling/ec2/userguide/Cooldown.html)
 
-### Question 20 
+### Question 20
 
 You have 2 development environments hosted in 2 different VPCs in an AWS account in the same region. There is now a requirement to access the resources of one VPC from another. How could this be accomplished?
 
@@ -390,3 +390,274 @@ You have 2 development environments hosted in 2 different VPCs in an AWS account
 - B: Establish a VPN connection.
 - C: Establish VPC Peering.
 - D: Establish Subnet Peering.
+
+#### _Answer C_
+
+A VPC peering connection is a networking connection between two VPCs that enable you to route traffic between them privately. Instances in either VPC can communicate with each other as if they are within the same network. You can create a VPC peering connection between your own VPCs, with a VPC in another AWS account, or with a VPC in a different AWS Region.
+
+### Question 21
+
+Your company is planning to store sensitive documents in an S3 bucket. They want to keep the documents private but serve content only to selected users based on a particular time frame. Which of the following can help you accomplish this?
+
+- A: Enable CORS for the S3 bucket
+- B: Use KMS and enable encryption for the files
+- C: Create pre-signed URL’s
+- D: Enable versioning for the S3 bucket
+
+#### _Answer C_
+
+A pre-signed URL gives you access to the object identified in the URL, provided that the creator of the pre-signed URL has permissions to access that object. That is, if you receive a pre-signed URL to upload an object, you can upload the object only if the creator of the pre-signed URL has the necessary permissions to upload that object.
+
+All objects and buckets by default are private. The pre-signed URLs are useful if you want your user/customer to be able to upload a specific object to your bucket, but you don't require them to have AWS security credentials or permissions. When you create a pre-signed URL, you must provide your security credentials and then specify a bucket name, an object key, an HTTP method (PUT for uploading objects), and an expiration date and time. The pre-signed URLs are valid only for the specified duration.
+
+Option A is incorrect since this is used for Cross-origin access.
+
+Option B is incorrect since this is used for encryption purposes.
+
+Option D is incorrect since this is used for versioning.
+
+### Question 22
+
+You have a requirement to get a snapshot of the current configuration of resources in your AWS Account. Which service can be used for this purpose?
+
+- A: AWS CodeDeploy
+- B: AWS Trusted Advisor
+- C: AWS Config
+- D: AWS IAM
+
+#### _Answer C_
+
+With AWS Config, you can do the following.
+
+Evaluate your AWS resource configurations for desired settings.
+Get a snapshot of the current configurations of the supported resources that are associated with your AWS account.
+Retrieve configurations of one or more resources that exist in your account.
+Retrieve historical configurations of one or more resources.
+Receive a notification whenever a resource is created, modified or deleted.
+View relationships between resources. For example, you might want to find all resources that use a particular security group.
+
+[AWS Config](http://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html)
+
+### Question 23
+
+You work for a company that has a set of EC2 Instances. There is an internal requirement to create another instance in another availability zone. One of the EBS volumes from the current instance needs to be moved from one of the older instances to the new instance. How can you achieve this?
+
+- A: Detach the volume and attach to an EC2 instance in another AZ.
+- B: Create a new volume in the other AZ and specify the current volume as the source.
+- C: Create a snapshot of the volume and then create a volume from the snapshot in the other AZ
+- D: Create a new volume in the AZ and do a disk copy of contents from one volume to another.
+
+#### _Answer: C_
+
+For a volume to be available in another availability zone, you need to create a snapshot from the volume. Then in the snapshot from creating a volume, you can then specify the new availability zone accordingly.
+
+The EBS Volumes attached to the EC2 Instance will always have to remain in the same availability zone as the EC2 Instance. A possible reason for this could be because EBS Volumes are present outside of the host machine, and instances have to be connected over the network. If the EBS Volumes are present outside the Availability Zone, there can be potential latency issues and subsequent performance degradation.
+
+What one can do in such a scenario is to get the Snapshot of the EBS Volume. Snapshot sequentially captures the state of your EBS Volume. You can create an EBS Volume from this snapshot in your desired Availability Zone and attach it to your new Instance.
+
+Later you can detach the volume from the older instance and delete then.
+
+Option A is invalid because the Instance and Volume have to be in the same AZ to be attached to the instance. After all, we have to specify AZ while creating Volume.
+
+Option B is invalid because there is no way to specify a volume as a source.
+
+Option D is invalid because the Diskcopy would be a tedious process.
+
+### Question 24
+
+You work as an architect for a company. An application is going to be deployed on a set of EC2 instances in a VPC. The Instances will be hosting a web application. You need to design the security group to ensure that users have the ability to connect from the Internet via HTTPS. Which of the following needs to be configured for the security group?
+
+- A: Allow Inbound access on port 443 for 0.0.0.0/0
+- B: Allow Outbound access on port 443 for 0.0.0.0/0
+- C: Allow Inbound access on port 80 for 0.0.0.0/0
+- D: Allow Outbound access on port 80 for 0.0.0.0/0
+
+#### _Answer: A_
+
+A security group acts as a virtual firewall for your instance to control inbound and outbound traffic. When you launch an instance in a VPC, you can assign five security groups to the instance. Security groups act at the instance level, not the subnet level. Therefore, each instance in a subnet in your VPC could be assigned to a different set of security groups. If you don't specify a particular group at launch time, the instance is automatically assigned to the default security group for the VPC.
+
+AWS Security groups are stateful. It means that you do not need to open the outbound for responses - open only inbound for requests. If you think your instances will be sending requests to certain IPs (for example: to upgrade/install a package), then you need to open the IP/port for that request. By default, it is open for all traffic.
+
+Option B is incorrect since security groups are stateful. You don’t need to define the rule for outbound traffic.
+
+Options C and D are incorrect since you need to ensure access for HTTPS. Hence you should not configure rules for port 80.
+
+### Question 25
+
+You have been designing a CloudFormation template that creates one elastic load balancer fronting two EC2 instances. Which section of the template should you edit so that the load balancer's DNS is returned upon creating the stack?
+
+- A: Resources
+- B: Parameters
+- C: Outputs
+- D: Mappings
+
+#### _Answer: C_
+
+The below example shows a simple CloudFormation template. It creates an EC2 instance based on the AMI - ami-d6f32ab5. When the instance is created, it will output the AZ in which it is created.
+
+```
+{
+
+    "Resources": {
+
+        "MyEC2Instance": {
+
+            "Type": "AWS::EC2::Instance",
+
+            "Properties": {
+
+                "ImageId": "ami-d6f32ab5"
+
+            }
+
+        }
+
+    },
+
+    "Outputs": {
+
+        "Availability": {
+
+            "Description": "The Instance ID",
+
+            "Value":
+
+            { "Fn::GetAtt" : [ "MyEC2Instance", "AvailabilityZone" ]}
+
+        }
+
+    }
+
+}
+```
+
+[AWS CloudFormation](https://aws.amazon.com/cloudformation/)
+[AWS intrinsic function reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html)
+
+Option A is incorrect because this is used to define the main resources in the template.
+
+Option B is incorrect because this is used to define parameters that can be taken during template deployment.
+
+Option D is incorrect because this is used to map key-value pairs in a template.
+
+### Question 26
+
+You work as an architect for a company. There is a requirement for an application to be deployed on a set of EC2 Instances. These would be part of a compute cluster that requires low inter-node latency. Which of the following would you use for this requirement?
+
+- A: Multiple Availability Zones
+- B: AWS Direct Connect
+- C: EC2 Dedicated Instances
+- D: Cluster placement Groups
+- E: VPC private subnets
+
+#### _Answer: D_
+
+Amazon Web Services' solution to reduce latency between instances involves the use of placement groups. As the name implies, a placement group is just that -- a group. AWS instances that exist within a common availability zone can be grouped into a placement group. Group members can communicate with one another in a way that provides low latency and high throughput.
+
+Cluster Placement groups are recommended for applications that benefit from low network latency, high network throughput, or both. The majority of the network traffic is between the instances in the group. To provide the lowest latency and the highest packet-per-second network performance for your placement group, choose an instance type that supports enhanced networking.
+
+Because of what is mentioned in the documentation, all other options are incorrect.
+
+### Question 27
+
+You are working as an AWS Architect for a software company. You are working on a new project which involves an application deployed on twenty C5 EC2 On-demand Instances with Elastic IP attached to each instance. During peak hours, when you are initiating new instances, a considerable delay is observed. You perform a pilot test for the option of initiating these Instances and hibernating so that during peak hours, these instances could be quickly launched.
+
+It works fine during the pilot phase. You are recommending this option to be implemented in production. The management team is concerned about the pricing of many EC2 instances in the Hibernate state. What is considered to calculate the pricing for an EC2 instance in the Hibernate state?
+
+- A: Elastic IP address and EBS volumes attached to EC2 Instance
+- B: Total Compute capacity per hour, Elastic IP address and EBS volumes attached to EC2 Instance
+- C: Total Compute capacity per hour and EBS volumes attached to EC2 Instance
+- D: Total Compute capacity per hour & Elastic IP address attached to EC2 Instance
+
+#### _Answer: A_
+
+Compute capacity is not chargeable during hibernate state of EC2 instances. When an EC2 instance is in the Hibernate state, you pay only for the EBS volumes and Elastic IP Addresses attached to it.
+
+Options B, C, and D are incorrect because when an EC2 instance is in a hibernate state, compute capacity charges are not applicable. The charges are only applicable for the EBS volumes and Elastic IP Addresses attached to it.
+
+### Question 28
+
+You are planning to launch the AWS ECS container instance. You would like to set the ECS container agent configuration during the ECS container instance initial launch. What should you perform to configure container agent information?
+
+- A: Set configuration in the ECS metadata parameter during cluster creation.
+- B: Set configuration in the user data parameter of EC2 instance.
+- C: Define configuration in the task definition.
+- D: Define configuration in the service definition.
+
+#### _Answer: B_
+
+When you launch an Amazon ECS container instance, you have the option of passing user data to the instance. The data can be used to perform common automated configuration tasks and even run scripts when the instance boots. For Amazon ECS, the most common use cases for user data are to pass configuration information to the Docker daemon and the Amazon ECS container agent.
+
+[AWS Launch ECS container](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html)
+
+Use `echo` to copy the configuration parameters to the file:
+
+```
+#!/bin/bash
+echo "ECS_CLUSTER=MyCluster" >> /etc/ecs/ecs.config
+```
+
+If there is multiple variables to be written in the ECS configuration file:
+
+```
+#!/bin/bash
+cat << 'EOF' >> /etc/ecs/ecs.config
+ECS_CLUSTER=MyCluster
+ECS_ENGINE_AUTH_TYPE=docker
+ECS_ENGINE_AUTH_DATA={"https://index.docker.io/v1/":{"username":"my_name","password":"my_password","email":"email@example.com"}}
+ECS_LOGLEVEL=debug
+EOF
+```
+
+### Question 29
+
+Which of the following actions is required by Lambda execution role to write the logs into AWS CloudWatch? (choose 3 options)
+
+- A: logs:CreateLogGroup
+- B: logs:GetLogEvents
+- C: logs:CreateLogStream
+- D: logs:DescribeLogStreams
+- E: logs:PutLogEvents
+
+#### _Answer: A & C & E_
+
+The corresponding configuration of `AWSLambdaBasicExecutionRole` is as follow:
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+### Question 30 
+
+Your company has setup EC2 Instances in a VPC for their application. The IT Security department has advised that all traffic be monitored to the EC2 Instances. Which of the following features can be used to capture information for outgoing and incoming IP traffic from network interfaces in a VPC.
+
+- A: AWS Cloudwatch
+- B: AWS EC2
+- C: AWS SQS
+- D: AWS VPC Flow Logs
+
+#### _Answer: D_
+
+VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. Flow log data can be published to Amazon CloudWatch Logs and Amazon S3. After you've created a flow log, you can retrieve and view its data in the chosen destination.
+
+Option A is incorrect since this is a monitoring service
+
+Option B is incorrect since this is a compute service
+
+Option C is incorrect since this is a messaging service
+
+### Question 31 
+
